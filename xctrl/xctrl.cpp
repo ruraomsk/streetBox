@@ -1,0 +1,216 @@
+#include "xctrl.h"
+
+
+Calc::Calc(int region, int area, int id)
+{
+    Region=region;
+    Area=area;
+    ID=id;
+}
+
+Calc::Calc(QMap<QString, QVariant> map)
+{
+    Region=map["region"].toInt();
+    Area=map["area"].toInt();
+    ID=map["id"].toInt();
+    foreach (auto l, map["chanL"].toList()) {
+        ChanL.append(l.toInt());
+    }
+    foreach (auto r, map["chanR"].toList()) {
+        ChanR.append(r.toInt());
+    }
+
+}
+
+QString Calc::ToJSON()
+{
+    QString result;
+    result.append(QString::asprintf("{\"region\":%d,\"area\":%d,\"id\":%d,\"chanL\":[",Region,Area,ID));
+    if(ChanL.size()>0){
+        foreach (auto var, ChanL) {
+            result.append(QString::asprintf("%d",var));
+            result.append(",");
+        }
+        result.remove(result.length()-1,1);
+    }
+    result.append("],\"chanR\":[");
+    if(ChanR.size()>0){
+        foreach (auto var, ChanR) {
+            result.append(QString::asprintf("%d",var));
+            result.append(",");
+        }
+        result.remove(result.length()-1,1);
+    }
+    result.append("]}");
+    return result;
+}
+
+Xctrl::Xctrl(int region, int area, int subarea)
+{
+    Region=region;
+    Area=area;
+    SubArea=subarea;
+    LastTime=QDateTime::currentDateTime();
+}
+
+Xctrl::Xctrl(QMap<QString, QVariant> map)
+{
+//    QJsonParseError jError;
+//    QJsonDocument jdoc=QJsonDocument::fromJson(json.toUtf8(),&jError);
+//    if (jError.error!=QJsonParseError::NoError){
+//        error=jError.errorString();
+//        return;
+//    }
+//    QMap<QString, QVariant>  map=jdoc.toVariant().toMap();
+    Region=map["region"].toInt();
+    Area=map["area"].toInt();
+    SubArea=map["subarea"].toInt();
+    Step=map["step"].toInt();
+    Remain=map["rem"].toInt();
+    Switch=map["switch"].toBool();
+    Release=map["release"].toBool();
+    PKNow=map["pknow"].toInt();
+    PKLast=map["pklast"].toInt();
+    PKCalc=map["pkcalc"].toInt();
+    Left=map["left"].toFloat();
+    Right=map["right"].toFloat();
+    name=map["name"].toString();
+    LastTime=QDateTime::fromString(map["ltime"].toString(),"yyyy-MM-ddThh:mm:ss.zzz");
+    foreach (auto s, map["status"].toList()) {
+        Status.append(s.toString());
+    }
+    foreach (auto r, map["Results"].toList()) {
+        Results.append(Result(r.toMap()));
+    }
+    foreach(auto s,map["Strategys"].toList()){
+        Strategys.append(Strategy(s.toMap()));
+    }
+    foreach(auto s,map["Calculates"].toList()){
+        Calculates.append(Calc(s.toMap()));
+    }
+}
+
+QString Xctrl::ToJSON()
+{
+    QString result;
+    result.append(QString::asprintf("{\"region\":%d,\"area\":%d,\"subarea\":%d,",Region,Area,SubArea));
+    result.append(QString::asprintf("\"switch\":%s,\"release\":%s,\"step\":%d,\"rem\":%d,",Switch?"true":"false",Release?"true":"false",Step,Remain));
+    result.append(QString::asprintf("\"pkcalc\":%d,\"pknow\":%d,\"pklast\":%d,",PKCalc,PKNow,PKLast));
+    result.append(QString::asprintf("\"left\":%d,\"right\":%d,\"status\":[",Left,Right));
+    if (Status.size()>0){
+        foreach (QString var, Status) {
+            result.append("\"");
+            result.append(var);
+            result.append("\",");
+        }
+        result.remove(result.length()-1,1);
+    }
+    result.append("],\"name\":\""+name+"\",");
+    result.append("\"ltime\":\""+LastTime.toString("yyyy-MM-ddThh:mm:ss.zzz")+"\",");
+    result.append("\"Results\":[");
+    if (Results.size()>0){
+        foreach (auto var, Results) {
+            result.append(var.ToJSON());
+            result.append(",");
+        }
+        result.remove(result.length()-1,1);
+    }
+    result.append("],");
+    result.append("\"Strategys\":[");
+    if (Strategys.size()>0){
+        foreach (auto var, Strategys) {
+            result.append(var.ToJSON());
+            result.append(",");
+        }
+        result.remove(result.length()-1,1);
+    }
+    result.append("],");
+    result.append("\"Calculates\":[");
+    if (Calculates.size()>0){
+        foreach (auto var, Calculates) {
+            result.append(var.ToJSON());
+            result.append(",");
+        }
+        result.remove(result.length()-1,1);
+    }
+    result.append("]}");
+    return result;
+}
+
+void Xctrl::AddStrategy(Strategy strat)
+{
+    Strategys.append(strat);
+}
+
+void Xctrl::AddCalc(Calc calc)
+{
+    Calculates.append(calc);
+}
+
+void Xctrl::AddResult(Result result)
+{
+    Results.append(result);
+}
+
+void Xctrl::AddStatus(QString status)
+{
+    Status.append(status);
+}
+
+
+Strategy::Strategy(int l, int r, int planl, int planm, int planr, float fl, float fr, QString description)
+{
+    L=l;
+    R=r;
+    PlanL=planl;
+    PlanM=planm;
+    PlanR=planr;
+    Fl=fl;
+    Fr=fr;
+    Description=description;
+
+}
+
+Strategy::Strategy(QMap<QString, QVariant> map)
+{
+    L=map["l"].toInt();
+    R=map["r"].toInt();
+    PlanL=map["planl"].toInt();
+    PlanR=map["planr"].toInt();
+    PlanM=map["planm"].toInt();
+    Fl=map["fl"].toFloat();
+    Fr=map["fr"].toFloat();
+    Description=map["desc"].toString();
+}
+
+bool Strategy::Compare(Strategy &st1, Strategy &st2)
+{
+    return st1.L<st2.L;
+}
+
+QString Strategy::ToJSON()
+{
+    QString result;
+    result.append(QString::asprintf("{\"l\":%d,\"r\":%d,\"planl\":%d,\"planr\":%d,\"planm\":%d,\"fl\":%f,\"fr\":%f,\"desc\":\"",L,R,PlanL,PlanR,PlanM,Fl,Fr));
+    result.append(Description+"\"}");
+    return result;
+}
+
+Result::Result(int il, int ir)
+{
+    Ileft=il;
+    Iright=ir;
+}
+
+Result::Result(QMap<QString, QVariant> map)
+{
+    Ileft=map["il"].toInt();
+    Iright=map["ir"].toInt();
+}
+
+QString Result::ToJSON()
+{
+    QString result;
+    result.append(QString::asprintf("{\"il\":%d,\"ir\":%d}",Ileft,Iright));
+    return result;
+}
