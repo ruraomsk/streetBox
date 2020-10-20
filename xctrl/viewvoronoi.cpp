@@ -33,7 +33,7 @@ void ViewVoronoi::paintEvent(QPaintEvent *)
     painter->setBrush(QBrush(Qt::black,Qt::SolidPattern));
     foreach (auto p, v->points) {
         int x=p.x,y=v->planMap->height()-p.y;
-        qDebug()<<x<<y<<p.x<<p.y<<p.x_<<p.y_;
+//        qDebug()<<x<<y<<p.x<<p.y<<p.x_<<p.y_;
         painter->setFont(QFont("san-serif",-1,10));
         QString w=QString::asprintf("(%d,%d)",p.x_,p.y_);
         painter->drawText(QPoint(x-23,y),w);

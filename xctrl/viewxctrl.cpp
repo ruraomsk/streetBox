@@ -121,13 +121,13 @@ void ViewXctrl::top()
 {
 #define maxSize 500,100
     wtop=new QWidget;
-    xctrl->Left=0;
+//    xctrl->Left=0;
 
-    xctrl->Right=0;
-    foreach (auto s, xctrl->Strategys) {
-        xctrl->Left=qMax(xctrl->Left,s.L);
-        xctrl->Right=qMax(xctrl->Right,s.R);
-    }
+//    xctrl->Right=0;
+//    foreach (auto s, xctrl->Strategys) {
+//        xctrl->Left=qMax(xctrl->Left,s.L);
+//        xctrl->Right=qMax(xctrl->Right,s.R);
+//    }
     lregion=new QLineEdit(QString::number(xctrl->Region),this);
     lregion->setMaximumSize(maxSize);
     larea=new QLineEdit(QString::number(xctrl->Area),this);
