@@ -94,6 +94,7 @@ void ViewXctrl::updated()
     }
     vor->makeDiagramm();
     vor->sprayes=temp;
+    delete voroni->text;
     voroni=new ViewVoronoi(vor);
     grid->addWidget(voroni,0,2,2,2);
     top();
