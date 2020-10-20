@@ -25,21 +25,22 @@ void ViewVoronoi::paintEvent(QPaintEvent *)
         for (int y = 0; y < v->planMap->height(); ++y) {
             pen.setColor(color[v->planMap->get(x,y)]);
             painter->setPen(pen);
-            painter->drawPoint(QPoint(x,600-y));
+            painter->drawPoint(QPoint(x,v->planMap->height()-y));
 //            qDebug()<<x<<y<<color[v->planMap->get(x,y)];
         }
     }
     painter->setPen(qRgb(0,0,0));
     painter->setBrush(QBrush(Qt::black,Qt::SolidPattern));
     foreach (auto p, v->points) {
-        int x=p.x,y=600-p.y;
+        int x=p.x,y=v->planMap->height()-p.y;
+        qDebug()<<x<<y<<p.x<<p.y<<p.x_<<p.y_;
         painter->setFont(QFont("san-serif",-1,10));
         QString w=QString::asprintf("(%d,%d)",p.x_,p.y_);
         painter->drawText(QPoint(x-23,y),w);
         painter->drawEllipse(x,y,4,4);
     }
     foreach (auto p, v->sprayes) {
-        int x=p.x,y=600-p.y;
+        int x=p.x,y=v->planMap->height()-p.y;
         painter->drawEllipse(x,y,3,3);
     }
 

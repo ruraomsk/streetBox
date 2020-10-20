@@ -6,7 +6,7 @@ Voronoi::Voronoi()
 
 }
 
-Voronoi::Voronoi(int width, int height)
+Voronoi::Voronoi(int height,int width)
 {
     delH=1.0;
     delW=1.0;
@@ -16,14 +16,15 @@ Voronoi::Voronoi(int width, int height)
     this->height=height;
     if(width!=MAX_W) {
         delW=(float)MAX_W/(float)width;
-        this->width=MAX_W;
+        this->width_=MAX_W;
+
     }
     if(height!=MAX_H) {
         delH=(float)MAX_H/(float)height;
-        this->height=MAX_H;
+        this->height_=MAX_H;
 
     }
-    planMap=new PlanMap(this->width,this->height);
+    planMap=new PlanMap(this->width_,this->height_);
 }
 
 Voronoi::~Voronoi()
@@ -41,8 +42,8 @@ void Voronoi::addSet(Strategy st)
     p.x=p.x*delW;
     p.y=p.y*delH;
     points.append(p);
-    st.L=st.L*delW;
-    st.R=st.R*delH;
+    st.L=st.L*delH;
+    st.R=st.R*delW;
     sts.append(st);
 }
 void Voronoi::addSpray(Point point,QString name)
@@ -60,14 +61,14 @@ void Voronoi::clearSpray()
 
 void Voronoi::makeDiagramm()
 {
-    int w=width;
-    int h=height;
+//    int w=width;
+//    int h=height;
     std::sort(sts.begin(),sts.end(),Strategy::Compare);
 
-    for (int hh = 1; hh < h; ++hh) {
-        for (int ww = 1; ww < w; ++ww) {
+    for (int hh = 1; hh < height_; ++hh) {
+        for (int ww = 1; ww < width_; ++ww) {
             foreach (auto s, sts) {
-                if(ww<=s.L&&hh<=s.R){
+                if(ww<=s.R&&hh<=s.L){
                     int plan=s.PlanM;
                     float f=((float)ww/(float)hh);
                     if(f<=s.Fl) plan=s.PlanL;
@@ -107,7 +108,7 @@ PlanMap::PlanMap(int w, int h)
     width_=w;
     height_=h;
 
-    QVector<uint8_t> t(h,0);
+    QVector<uint8_t> t(h,1);
     for (int i = 0; i < w; ++i) {
         map.append(t);
     }

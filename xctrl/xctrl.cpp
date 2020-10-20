@@ -185,7 +185,7 @@ Strategy::Strategy(QMap<QString, QVariant> map)
 
 bool Strategy::Compare(Strategy &st1, Strategy &st2)
 {
-    return st1.L<st2.L;
+    return st1.R<st2.R;
 }
 
 QString Strategy::ToJSON()
