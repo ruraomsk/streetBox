@@ -85,10 +85,11 @@ void XTCalculate::calculate()
         protocol.append(v[0]+" "+line);
         v[1]=QString::number(l);
         v[2]=QString::number(r);
+        float f;
         int plan=0;
         foreach (auto st, xctrl->Strategys) {
             if(l<=st.L&&r<=st.R){
-                float f=(float)l/(float)r;
+                f=(float)l/(float)r;
                 plan=st.PlanM;
                 if(f<=st.Fl) plan=st.PlanL;
                 if(f<=st.Fr) plan=st.PlanR;
@@ -97,6 +98,7 @@ void XTCalculate::calculate()
         }
         if (plan==0)    v[3]="Нет плана";
         else            v[3]=QString::number(plan)+" "+getDescription(plan);
+        v[4]=QString::asprintf("%.2f",f);
         fin.append(v);
         beginTime=endTime;
         endTime+=xctrl->Step;

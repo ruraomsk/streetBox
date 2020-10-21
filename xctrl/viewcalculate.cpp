@@ -99,7 +99,7 @@ void ViewCalculate::calculateData()
     ltext->setText(text);
     delete wtable;
     wtable=new QTableWidget;
-    QStringList list={"Время","Прямое","Обратное","ПК назначенный"};
+    QStringList list={"Время","Прямое","Обратное","ПК назначенный","Отношение"};
     wtable->setColumnCount(list.size());
     for (int i = 0; i < list.size(); ++i) {
         QTableWidgetItem *t=new QTableWidgetItem(list[i]);
