@@ -85,10 +85,12 @@ void XTCalculate::calculate()
         protocol.append(v[0]+" "+line);
         v[1]=QString::number(l);
         v[2]=QString::number(r);
-        float f;
+        float f=0.0;
         int plan=0;
         foreach (auto st, xctrl->Strategys) {
             if(l<=st.L&&r<=st.R){
+                if(r==0)r=999999;
+                if(l==0)l=1;
                 f=(float)l/(float)r;
                 plan=st.PlanM;
                 if(f<=st.Fl) plan=st.PlanL;
