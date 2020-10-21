@@ -62,6 +62,7 @@ void Voronoi::addSpray(Point point,QString name)
 void Voronoi::clearSpray()
 {
     sprayes.clear();
+    nameSprayes.clear();
 }
 
 void Voronoi::makeDiagramm()
@@ -113,7 +114,7 @@ PlanMap::PlanMap(int w, int h)
     width_=w;
     height_=h;
 
-    QVector<uint8_t> t(h,1);
+    QVector<uint8_t> t(h,0);
     for (int i = 0; i < w; ++i) {
         map.append(t);
     }

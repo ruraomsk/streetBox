@@ -89,7 +89,7 @@ void ViewXctrl::updated()
     auto tempn=vor->nameSprayes;
     delete vor;
     delete voroni;
-    vor=new Voronoi(xctrl->Left,xctrl->Right);
+    vor=new Voronoi(qMax(xctrl->Left,xctrl->Right),qMax(xctrl->Left,xctrl->Right));
     foreach(auto st,xctrl->Strategys){
         vor->addSet(st);
     }

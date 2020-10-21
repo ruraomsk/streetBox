@@ -30,6 +30,7 @@ private:
     void CreateColor();
     void CreateSitesPoint();
     void makeAllSites();
+    void clearBack();
     QWidget *parent;
     Voronoi *v;
     QMap<uint8_t,QColor> color;

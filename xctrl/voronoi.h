@@ -5,8 +5,8 @@
 #include <QRandomGenerator>
 
 #include "xctrl.h"
-#define MAX_W 800
-#define MAX_H 600
+#define MAX_W 1000
+#define MAX_H 1000
 
 class PlanMap
 {

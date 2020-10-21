@@ -20,10 +20,17 @@ void ViewVoronoi::paintEvent(QPaintEvent *)
     QPainter *painter = new QPainter(this);
     QPen pen;
     pen.setWidth(1);
+//    for(int x=0;x<v->planMap->width();x++){
+//        for (int y = 0; y < v->planMap->height(); ++y) {
+//            pen.setColor(qRgb(255,255,255));
+//            painter->setPen(pen);
+//            painter->drawPoint(QPoint(x,v->planMap->height()-y));
+//        }
+//    }
     painter->translate(QPoint(0,0));
     for(int x=0;x<v->planMap->width();x++){
         for (int y = 0; y < v->planMap->height(); ++y) {
-            pen.setColor(color[v->planMap->get(x,y)]);
+                pen.setColor(color[v->planMap->get(x,y)]);
             painter->setPen(pen);
             painter->drawPoint(QPoint(x,v->planMap->height()-y));
 //            qDebug()<<x<<y<<color[v->planMap->get(x,y)];
@@ -50,8 +57,8 @@ void ViewVoronoi::paintEvent(QPaintEvent *)
 void ViewVoronoi::mouseMoveEvent(QMouseEvent *event)
 {
     int x=event->pos().x();
-    int y=600-event->pos().y();
-    if(x>0&&x<800 &&y>0&&y<600){
+    int y=v->planMap->height()-event->pos().y();
+    if(x>0&&x<v->planMap->width() &&y>0&&y<v->planMap->height()){
         y=(int)((float)y)/v->delH;
         x=(int)((float)x)/v->delW;
         text->setText(QVariant(y).toString()+":"+QVariant(x).toString());
@@ -76,12 +83,14 @@ void ViewVoronoi::mouseMoveEvent(QMouseEvent *event)
 
 void ViewVoronoi::CreateColor()
 {
+    color[0]=qRgb(255,255,255);
     foreach (auto s,v->sts ) {
         color[s.PlanL]=(qRgb(rand() % 200 + 50, rand() % 200 + 55, rand() % 200 + 50));
         color[s.PlanR]=(qRgb(rand() % 200 + 50, rand() % 200 + 55, rand() % 200 + 50));
         color[s.PlanM]=(qRgb(rand() % 200 + 50, rand() % 200 + 55, rand() % 200 + 50));
     }
 }
+
 
 
 
