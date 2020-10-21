@@ -11,7 +11,7 @@ ViewXctrl::ViewXctrl(Project *project,Xctrl *xctrl,QWidget *parent) : QWidget(pa
     connect(vstrategy,SIGNAL(updated()),this,SLOT(updated()));
     grid=new QGridLayout(this);
     grid->addWidget(vstrategy,1,1);
-    vor=new Voronoi(xctrl->Left,xctrl->Right);
+    vor=new Voronoi(qMax(xctrl->Left,xctrl->Right),qMax(xctrl->Left,xctrl->Right));
     foreach(auto st,xctrl->Strategys){
         vor->addSet(st);
     }
