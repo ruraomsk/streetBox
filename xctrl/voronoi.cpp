@@ -25,6 +25,8 @@ Voronoi::Voronoi(int height,int width)
 
     }
     planMap=new PlanMap(this->width_,this->height_);
+    sprayes.clear();
+    nameSprayes.clear();
 }
 
 Voronoi::~Voronoi()
@@ -52,6 +54,9 @@ void Voronoi::addSpray(Point point,QString name)
     point.y=point.y*delH;
     sprayes.append(point);
     nameSprayes.append(name);
+    if(sprayes.size()!=nameSprayes.size()){
+        qDebug()<<sprayes.size()<<nameSprayes.size();
+    }
 }
 
 void Voronoi::clearSpray()

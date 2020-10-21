@@ -61,7 +61,7 @@ QVector<QString> ViewCalculate::getNames()
 {
     QVector<QString> result;
     foreach (auto var, calcData->fin) {
-        result.append(var[0]);
+        result.append(var[0]+" "+addString);
     }
     return result;
 
@@ -70,12 +70,15 @@ QVector<QString> ViewCalculate::getNames()
 void ViewCalculate::loadData()
 {
     if (gdefault->isChecked()){
+        addString="";
         calcData=new XTCalculate(project,xctrl);
     }
     if (gdate->isChecked()){
+        addString=cdates->currentText();
         calcData=new XTCalculate(project,xctrl,QDate::fromString(cdates->currentText(),"dd.MM.yyyy"));
     }
     if (gcomment->isChecked()){
+        addString=ccomments->currentText();
         calcData=new XTCalculate(project,xctrl,ccomments->currentText());
     }
     QString text;

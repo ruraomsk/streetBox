@@ -86,6 +86,7 @@ void ViewXctrl::ChangeXT()
 void ViewXctrl::updated()
 {
     auto temp=vor->sprayes;
+    auto tempn=vor->nameSprayes;
     delete vor;
     delete voroni;
     vor=new Voronoi(xctrl->Left,xctrl->Right);
@@ -94,6 +95,7 @@ void ViewXctrl::updated()
     }
     vor->makeDiagramm();
     vor->sprayes=temp;
+    vor->nameSprayes=tempn;
     delete voroni->text;
     voroni=new ViewVoronoi(vor);
     grid->addWidget(voroni,0,2,2,2);

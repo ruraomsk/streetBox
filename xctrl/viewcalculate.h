@@ -50,7 +50,7 @@ private:
     QPushButton *btnCalculate;
     QPushButton *btnPush;
 
-
+    QString addString;
 
 
 };
