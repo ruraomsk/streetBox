@@ -40,9 +40,9 @@ int Voronoi::RandomBetween(int low, int high)
 
 void Voronoi::addSet(Strategy st)
 {
-    Point p(st.L,st.R);
-    p.x=p.x*delW;
-    p.y=p.y*delH;
+    Point p(st.R,st.L);
+    p.w=p.w*delW;
+    p.h=p.h*delH;
     points.append(p);
     st.L=st.L*delH;
     st.R=st.R*delW;
@@ -50,8 +50,8 @@ void Voronoi::addSet(Strategy st)
 }
 void Voronoi::addSpray(Point point,QString name)
 {
-    point.x=point.x*delW;
-    point.y=point.y*delH;
+    point.w=point.w*delW;
+    point.h=point.h*delH;
     sprayes.append(point);
     nameSprayes.append(name);
     if(sprayes.size()!=nameSprayes.size()){
@@ -140,18 +140,18 @@ uint8_t PlanMap::get(int w, int h)
 
 }
 
-Point::Point(int x, int y)
+Point::Point(int w, int h)
 {
-    this->x=y;
-    this->y=x;
-    x_=x;
-    y_=y;
+    this->w=w;
+    this->h=h;
+    w_=w;
+    h_=h;
 }
 
 
-bool Point::near(int rx, int ry)
+bool Point::near(int rw, int rh)
 {
 //    qDebug()<<x_<<y_<<rx<<ry<<(x_>=(rx-10) && (x_<=(rx-10)) && y_>=(ry-10) &&(y_<=(ry+10)));
-    return (x_>=(rx-10) && (x_<=(rx+10)) && y_>=(ry-10) &&(y_<=(ry+10)));
+    return (w_>=(rw-10) && (w_<=(rw+10)) && h_>=(rh-10) &&(h_<=(rh+10)));
 }
 

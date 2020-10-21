@@ -25,11 +25,11 @@ private:
 
 class Point{
 public:
-    Point(int x, int y);
-    bool near(int x, int y);
+    Point(int w, int h);
+    bool near(int w, int h);
 
-    int x,y;
-    int x_,y_;
+    int w,h;
+    int w_,h_;
 };
 
 class Voronoi

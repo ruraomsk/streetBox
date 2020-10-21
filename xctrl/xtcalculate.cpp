@@ -91,10 +91,10 @@ void XTCalculate::calculate()
             if(l<=st.L&&r<=st.R){
                 if(r==0)r=999999;
                 if(l==0)l=1;
-                f=(float)l/(float)r;
+                f=(float)r/(float)l;
                 plan=st.PlanM;
                 if(f<=st.Fl) plan=st.PlanL;
-                if(f<=st.Fr) plan=st.PlanR;
+                if(f>=st.Fr) plan=st.PlanR;
                 break;
             }
         }
