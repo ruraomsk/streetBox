@@ -12,8 +12,10 @@ ViewXctrl::ViewXctrl(Project *project,Xctrl *xctrl,QWidget *parent) : QWidget(pa
     grid=new QGridLayout(this);
     grid->addWidget(vstrategy,1,1);
     vor=new Voronoi(qMax(xctrl->Left,xctrl->Right),qMax(xctrl->Left,xctrl->Right));
+    QList<Strategy> strates;
     foreach(auto st,xctrl->Strategys){
         vor->addSet(st);
+        strates.append(st);
     }
     vor->makeDiagramm();
     voroni=new ViewVoronoi(vor);
@@ -26,10 +28,11 @@ ViewXctrl::ViewXctrl(Project *project,Xctrl *xctrl,QWidget *parent) : QWidget(pa
     connect(vpoints,SIGNAL(updated()),this,SLOT(updated()));
     vcalc=new ViewCalculate(project,xctrl);
     connect(vcalc,SIGNAL(newSpray()),this,SLOT(addSpray()));
-
+    vsum=new SumGraph();
 //    tab->addTab(vstrategy,"Стратегии");
     tab->addTab(vpoints,"Точки");
     tab->addTab(vcalc,"Расчет");
+    tab->addTab(vsum,"Графики");
     QGridLayout *maingrid=new QGridLayout(this);
     maingrid->addWidget(tab,0,1);
     setLayout(maingrid);
@@ -87,7 +90,9 @@ void ViewXctrl::updated()
 {
     auto temp=vor->sprayes;
     auto tempn=vor->nameSprayes;
+    auto tempb=vor->bogoses;
     delete vor;
+    delete voroni->text;
     delete voroni;
     vor=new Voronoi(qMax(xctrl->Left,xctrl->Right),qMax(xctrl->Left,xctrl->Right));
     foreach(auto st,xctrl->Strategys){
@@ -96,7 +101,7 @@ void ViewXctrl::updated()
     vor->makeDiagramm();
     vor->sprayes=temp;
     vor->nameSprayes=tempn;
-    delete voroni->text;
+    vor->bogoses=tempb;
     voroni=new ViewVoronoi(vor);
     grid->addWidget(voroni,0,2,2,2);
     top();
@@ -111,11 +116,25 @@ void ViewXctrl::addSpray()
     foreach (auto p, vcalc->getSprays()) {
         vor->addSpray(p,names[i++]);
     };
+    vsum->addData(vcalc->getData());
 }
 
 void ViewXctrl::clearSpray()
 {
     vor->clearSpray();
+    vsum->clearAll();
+    updated();
+}
+
+void ViewXctrl::makeBogko()
+{
+    QList<Strategy> strates;
+    foreach(auto st,xctrl->Strategys){
+        strates.append(st);
+    }
+    Bogko *b=new Bogko(strates);
+    if (b->error) return;
+    vor->addBogoses(b->centrals);
     updated();
 }
 
@@ -158,9 +177,13 @@ void ViewXctrl::top()
     QPushButton *bClearSpray=new QPushButton("Почистить");
     connect(bClearSpray,SIGNAL(clicked()),this,SLOT(clearSpray()));
     bClearSpray->setMaximumSize(100,100);
+    QPushButton *bBogko=new QPushButton("Старая система");
+    connect(bBogko,SIGNAL(clicked()),this,SLOT(makeBogko()));
+    bBogko->setMaximumSize(100,100);
     QHBoxLayout *btn=new QHBoxLayout;
     btn->addWidget(okBtn);
     btn->addWidget(bClearSpray);
+    btn->addWidget(bBogko);
     hbox->addRow(btn);
     hbox->addRow(voroni->text);
     wtop->setLayout(hbox);

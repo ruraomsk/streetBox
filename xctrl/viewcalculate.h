@@ -13,6 +13,7 @@
 #include "viewstrategy.h"
 #include "xtcalculate.h"
 #include "voronoi.h"
+#include "sumgraph.h"
 extern Setup ini;
 
 class ViewCalculate : public QWidget
@@ -22,6 +23,7 @@ public:
     explicit ViewCalculate(Project *project,Xctrl *xctrl,QWidget *parent = nullptr);
     QVector<Point> getSprays();
     QVector<QString> getNames();
+    DataGraph getData();
 signals:
     void newSpray();
 private slots:

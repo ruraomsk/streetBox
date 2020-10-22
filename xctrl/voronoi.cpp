@@ -27,6 +27,7 @@ Voronoi::Voronoi(int height,int width)
     planMap=new PlanMap(this->width_,this->height_);
     sprayes.clear();
     nameSprayes.clear();
+    bogoses.clear();
 }
 
 Voronoi::~Voronoi()
@@ -48,6 +49,16 @@ void Voronoi::addSet(Strategy st)
     st.R=st.R*delW;
     sts.append(st);
 }
+
+void Voronoi::addBogoses(QVector<Point> bogs)
+{
+    bogoses.clear();
+    foreach(Point p,bogs){
+        p.w=p.w*delW;
+        p.h=p.h*delH;
+        bogoses.append(p);
+    }
+}
 void Voronoi::addSpray(Point point,QString name)
 {
     point.w=point.w*delW;
@@ -63,6 +74,7 @@ void Voronoi::clearSpray()
 {
     sprayes.clear();
     nameSprayes.clear();
+    bogoses.clear();
 }
 
 void Voronoi::makeDiagramm()
@@ -153,5 +165,53 @@ bool Point::near(int rw, int rh)
 {
 //    qDebug()<<x_<<y_<<rx<<ry<<(x_>=(rx-10) && (x_<=(rx-10)) && y_>=(ry-10) &&(y_<=(ry+10)));
     return (w_>=(rw-10) && (w_<=(rw+10)) && h_>=(rh-10) &&(h_<=(rh+10)));
+}
+
+Point Point::mediana(int nw, int nh)
+{
+    Point p((nw-w)/2,(nh-h)/2);
+    return p;
+}
+
+Point Point::summ(int nw, int nh,int bw,int bh)
+{
+    float f=(float)bh/(float)bw;
+        qDebug()<<bh<<bw<<f;
+    Point p(((float)(nw-w)/f)+nw,f*((float)(nh-h))+nh);
+//    qDebug()<<bh<<bw<<f;
+    return p;
+}
+
+Point Point::simetr(float f)
+{
+    //Поиск точки симметричной оносительно прямой h=(1/f)w+0
+    // Считаем коэффициент к
+//    qDebug()<<"------------------------------";
+//    qDebug()<<h<<w;
+
+    float a1=1.0/f;
+    float b1=0.0;
+//    qDebug()<<a1<<b1;
+    float a2=-(1/a1);
+    //Считаем b
+    float b2=h-a2*w;
+//    qDebug()<<a2<<b2;
+    //Теперь мы знаем прямую перпендикулярную
+    //Первая координата
+    int w1=(int)((b2-b1)/(a1-a2));
+    int h1=(int)((1.0/f)*(float)w1);
+//    qDebug()<<h1<<w1;
+
+    int w2=2*w1-w;
+    int h2=2*h1-h;
+//    qDebug()<<h2<<w2;
+
+    Point p(w2,h2);
+    return p;
+}
+
+bool Point::isGood()
+{
+    return !(w<=0 ||h<=0);
 }
 

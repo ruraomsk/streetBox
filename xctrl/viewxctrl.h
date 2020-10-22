@@ -21,7 +21,8 @@
 #include "viewcalculate.h"
 #include "viewvoronoi.h"
 #include "voronoi.h"
-
+#include "bogko.h"
+#include "sumgraph.h"
 extern Setup ini;
 
 QT_CHARTS_USE_NAMESPACE
@@ -40,6 +41,7 @@ private slots:
     void updated();
     void addSpray();
     void clearSpray();
+    void makeBogko();
 public:
 
 private:
@@ -68,6 +70,7 @@ private:
     ViewStrategy *vstrategy;
     ViewPoints *vpoints;
     ViewCalculate *vcalc;
+    SumGraph *vsum;
 
 };
 

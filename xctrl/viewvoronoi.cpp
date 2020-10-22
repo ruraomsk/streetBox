@@ -12,6 +12,7 @@ ViewVoronoi::ViewVoronoi(Voronoi *v, QWidget *parent)
     setFixedSize(v->planMap->width(),v->planMap->height());
     CreateColor();
     text=new QLabel;
+    text->setText("Координаты");
     update();
 }
 
@@ -39,6 +40,14 @@ void ViewVoronoi::paintEvent(QPaintEvent *)
     painter->setPen(qRgb(0,0,0));
     painter->setBrush(QBrush(Qt::black,Qt::SolidPattern));
     foreach (auto p, v->points) {
+        int w=p.w,h=v->planMap->height()-p.h;
+//        qDebug()<<x<<y<<p.x<<p.y<<p.x_<<p.y_;
+        painter->setFont(QFont("san-serif",-1,10));
+        QString ww=QString::asprintf("(%d,%d)",p.h_,p.w_);
+        painter->drawText(QPoint(w-23,h),ww);
+        painter->drawEllipse(w,h,4,4);
+    }
+    foreach (auto p, v->bogoses) {
         int w=p.w,h=v->planMap->height()-p.h;
 //        qDebug()<<x<<y<<p.x<<p.y<<p.x_<<p.y_;
         painter->setFont(QFont("san-serif",-1,10));

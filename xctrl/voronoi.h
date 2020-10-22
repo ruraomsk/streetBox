@@ -5,8 +5,8 @@
 #include <QRandomGenerator>
 
 #include "xctrl.h"
-#define MAX_W 1000
-#define MAX_H 1000
+#define MAX_W 800
+#define MAX_H 800
 
 class PlanMap
 {
@@ -27,7 +27,10 @@ class Point{
 public:
     Point(int w, int h);
     bool near(int w, int h);
-
+    Point mediana(int nw, int nh);
+    Point summ(int nw, int nh,int bw, int bh);
+    Point simetr(float f);
+    bool isGood();
     int w,h;
     int w_,h_;
 };
@@ -40,6 +43,7 @@ public:
     ~Voronoi();
     int RandomBetween(int low, int high);
     void addSet(Strategy st);
+    void addBogoses(QVector<Point> bogs);
     void addSpray(Point point,QString name);
     void clearSpray();
     void makeDiagramm();
@@ -50,6 +54,7 @@ public:
     QVector<Point> coords;
     QVector<Point> sprayes;
     QVector<QString> nameSprayes;
+    QVector<Point> bogoses;
     PlanMap *planMap;
     float delW;
     float delH;

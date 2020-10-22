@@ -33,8 +33,10 @@ SOURCES += \
     stat/archstat.cpp \
     support.cpp \
     viewsetup.cpp \
+    xctrl/bogko.cpp \
     xctrl/dialogaddemptyxt.cpp \
     xctrl/readjsonfile.cpp \
+    xctrl/sumgraph.cpp \
     xctrl/viewcalculate.cpp \
     xctrl/viewpoints.cpp \
     xctrl/viewstrategy.cpp \
@@ -61,8 +63,10 @@ HEADERS += \
     stat/archstat.h \
     support.h \
     viewsetup.h \
+    xctrl/bogko.h \
     xctrl/dialogaddemptyxt.h \
     xctrl/readjsonfile.h \
+    xctrl/sumgraph.h \
     xctrl/viewcalculate.h \
     xctrl/viewpoints.h \
     xctrl/viewstrategy.h \

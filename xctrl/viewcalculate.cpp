@@ -67,6 +67,22 @@ QVector<QString> ViewCalculate::getNames()
 
 }
 
+DataGraph ViewCalculate::getData()
+{
+    DataGraph r("Расчет "+QDateTime::currentDateTime().toString());
+    r.datas.clear();
+    foreach (auto var, calcData->fin) {
+        QVector<int> line;
+        auto ls=var[0].split(":");
+        line.append(ls[0].toInt()*60+ls[1].toInt());
+        line.append(var[1].toInt());
+        line.append(var[2].toInt());
+        r.datas.append(line);
+    }
+    return r;
+
+}
+
 void ViewCalculate::loadData()
 {
     if (gdefault->isChecked()){
