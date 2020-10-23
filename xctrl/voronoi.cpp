@@ -66,7 +66,7 @@ void Voronoi::addSpray(Point point,QString name)
     sprayes.append(point);
     nameSprayes.append(name);
     if(sprayes.size()!=nameSprayes.size()){
-        qDebug()<<sprayes.size()<<nameSprayes.size();
+//        qDebug()<<sprayes.size()<<nameSprayes.size();
     }
 }
 
@@ -176,7 +176,7 @@ Point Point::mediana(int nw, int nh)
 Point Point::summ(int nw, int nh,int bw,int bh)
 {
     float f=(float)bh/(float)bw;
-        qDebug()<<bh<<bw<<f;
+//        qDebug()<<bh<<bw<<f;
     Point p(((float)(nw-w)/f)+nw,f*((float)(nh-h))+nh);
 //    qDebug()<<bh<<bw<<f;
     return p;

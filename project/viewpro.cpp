@@ -194,7 +194,7 @@ void ViewPro::AddXtEmpty()
         project->isChanged=true;
         appendTabCross();
     };
-    qDebug()<<"AddXtEmpty";
+//    qDebug()<<"AddXtEmpty";
 }
 
 void ViewPro::AddXtFromJSON()
@@ -222,7 +222,7 @@ void ViewPro::DeleteXt()
         appendTabCross();
     }
 
-    qDebug()<<"DeleteXT";
+//    qDebug()<<"DeleteXT";
 }
 
 void ViewPro::SaveToJson()
@@ -248,7 +248,7 @@ void ViewPro::SaveToJson()
         msg.exec();
     }
     return;
-    qDebug()<<"SaveToJson";
+//    qDebug()<<"SaveToJson";
 
 }
 

@@ -73,7 +73,7 @@ void ViewVoronoi::mouseMoveEvent(QMouseEvent *event)
         text->setText(QVariant(h).toString()+":"+QVariant(w).toString());
         int i=0;
         if(v->sprayes.size()!=v->nameSprayes.size()){
-            qDebug()<<v->sprayes.size()<<v->nameSprayes.size();
+//            qDebug()<<v->sprayes.size()<<v->nameSprayes.size();
         }
 
         foreach (Point p, v->sprayes) {
