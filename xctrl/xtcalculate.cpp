@@ -76,11 +76,16 @@ void XTCalculate::calculate()
         QVector<QString> v(10);
         v[0]=QString::asprintf("%02d:%02d",endTime/60,endTime%60);
         QString line;
+        QVector<float> fs;
         foreach (auto c, xctrl->Calculates) {
             l=qMax(l,dus[c.ID].getFlow(c.ChanL,beginTime,endTime));
             line+=" ("+QString::number(dus[c.ID].getFlow(c.ChanL,beginTime,endTime))+",";
             r=qMax(r,dus[c.ID].getFlow(c.ChanR,beginTime,endTime));
             line+=QString::number(dus[c.ID].getFlow(c.ChanR,beginTime,endTime))+")";
+            if(r==0)r=999999;
+            if(l==0)l=1;
+            float f=(float)l/(float)r;
+            fs.append(f);
         }
         protocol.append(v[0]+" "+line);
         v[1]=QString::number(l);
@@ -89,12 +94,18 @@ void XTCalculate::calculate()
         int plan=0;
         foreach (auto st, xctrl->Strategys) {
             if(l<=st.L&&r<=st.R){
+                int c[3]={0,0,0};
+                foreach (float f, fs) {
+                    if(f<=st.Fl) c[0]++;
+                    if(f>=st.Fr) c[2]++;
+                    if(f>st.Fl&&f<st.Fr) c[1]++;
+                }
                 if(r==0)r=999999;
                 if(l==0)l=1;
                 f=(float)r/(float)l;
                 plan=st.PlanM;
-                if(f<=st.Fl) plan=st.PlanL;
-                if(f>=st.Fr) plan=st.PlanR;
+                if (c[0]>c[1]&&c[0]>c[2])plan=st.PlanL;
+                if (c[2]>c[0]&&c[2]>c[1]) plan=st.PlanR;
                 break;
             }
         }
