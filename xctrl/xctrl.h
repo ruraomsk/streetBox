@@ -17,6 +17,18 @@ public:
     QList<int> ChanL;               //`json:"chanL"`
     QList<int> ChanR;               //`json:"chanR"`
 };
+class Areal{
+public:
+    Areal(int l,int r,int plan,QString description);
+    Areal(QMap<QString, QVariant> map);
+    QString ToJSON();
+    static bool Compare(Areal &ar1,Areal &ar2);
+    int L;                          //Интенсивность в прямом направлении
+    int R;                          //Интенсивногсть в обратном направлении
+    int Plan;                       // Назначенный план прямой
+    QString Description;
+};
+
 class Strategy{
 public:
     Strategy(int l,int r,int planl,int planm,int planr,float fl,float fr,QString description);
@@ -51,6 +63,8 @@ public:
     Xctrl(QMap<QString, QVariant> map);
     QString ToJSON();
     void AddStrategy(Strategy strat);
+    void AddAreal(Areal areal);
+
     void AddCalc(Calc calc);
     void AddResult(Result result);
     void AddStatus(QString status);
@@ -70,7 +84,8 @@ public:
     int Left=1000;                  //Максимум для прямого направления `json:"left"`
     int Right=1000;                 //Максимум для обратного направления `json:"right"`
     QStringList Status;             //Состояние расчетов и итоги проверки `json:"status"`
-    QList<Strategy> Strategys;      //Правила перехода
+    QList<Strategy> Strategys;      //Правила перехода циклограммой
+    QList<Areal> Areals;            //Правила перехода по областям
     QList<Calc> Calculates;         //Правила расчета характерной точки
     QList<Result> Results;          //Промежуточные результаты
 private:

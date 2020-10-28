@@ -52,6 +52,10 @@ private:
     QPushButton *btnCalculate;
     QPushButton *btnPush;
 
+    QGroupBox *gstyle;
+    QRadioButton *garea;
+    QRadioButton *gbox;
+
     QString addString;
 
 

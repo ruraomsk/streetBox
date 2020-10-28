@@ -24,6 +24,7 @@ public:
     XTCalculate(Project *project,Xctrl *xctrl,QDate date);
     XTCalculate(Project *project,Xctrl *xctrl); // Работаем по выставленным значениям
     void calculate();
+    void calcAreal();
     bool error=false;
     QStringList protocol;
     QList<QVector<QString>> fin;

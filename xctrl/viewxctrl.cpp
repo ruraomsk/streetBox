@@ -29,10 +29,14 @@ ViewXctrl::ViewXctrl(Project *project,Xctrl *xctrl,QWidget *parent) : QWidget(pa
     vcalc=new ViewCalculate(project,xctrl);
     connect(vcalc,SIGNAL(newSpray()),this,SLOT(addSpray()));
     vsum=new SumGraph();
+    areal=new ViewAreal(project,xctrl);
+
 //    tab->addTab(vstrategy,"Стратегии");
+    tab->addTab(areal,"Области");
     tab->addTab(vpoints,"Точки");
     tab->addTab(vcalc,"Расчет");
     tab->addTab(vsum,"Графики");
+
     QGridLayout *maingrid=new QGridLayout(this);
     maingrid->addWidget(tab,0,1);
     setLayout(maingrid);
@@ -114,14 +118,18 @@ void ViewXctrl::addSpray()
     int i=0;
     auto names=vcalc->getNames();
     foreach (auto p, vcalc->getSprays()) {
+        areal->vor->addSpray(p,names[i]);
         vor->addSpray(p,names[i++]);
     };
+    areal->redraw();
     vsum->addData(vcalc->getData());
 }
 
 void ViewXctrl::clearSpray()
 {
     vor->clearSpray();
+    areal->vor->clearSpray();
+    areal->redraw();
     vsum->clearAll();
     updated();
 }

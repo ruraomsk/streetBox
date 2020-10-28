@@ -16,6 +16,7 @@
 
 #include "../project/project.h"
 #include "../setup.h"
+#include "viewareal.h"
 #include "viewpoints.h"
 #include "viewstrategy.h"
 #include "viewcalculate.h"
@@ -62,8 +63,10 @@ private:
 //    QWidget *wgraph;
     QWidget *strateg;
     QWidget *points;
+    ViewAreal *areal;
     ViewVoronoi *voroni;
-    Voronoi *vor;
+
+    Voronoi *vor;               // Для циклограмм
 
     QTabWidget *tab;            //основной виджет редактора
     QGridLayout *grid;

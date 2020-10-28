@@ -28,6 +28,7 @@ public:
     Point(int w, int h);
     bool near(int w, int h);
     Point mediana(int nw, int nh);
+    ulong DistanceSqrd(int w,int h);
     Point summ(int nw, int nh,int bw, int bh);
     Point simetr(float f);
     bool isGood();
@@ -43,10 +44,12 @@ public:
     ~Voronoi();
     int RandomBetween(int low, int high);
     void addSet(Strategy st);
+    void addAreal(Areal ar);
     void addBogoses(QVector<Point> bogs);
     void addSpray(Point point,QString name);
     void clearSpray();
     void makeDiagramm();
+    void makeAreals();
     uint8_t GetPlan(int w,int h);
     QList<Strategy> sts;
     QVector<Point>  CreatePoints(int count);
@@ -55,6 +58,7 @@ public:
     QVector<Point> sprayes;
     QVector<QString> nameSprayes;
     QVector<Point> bogoses;
+    QVector<int> plans;
     PlanMap *planMap;
     float delW;
     float delH;

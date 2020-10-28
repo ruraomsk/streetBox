@@ -17,8 +17,21 @@ ViewCalculate::ViewCalculate(    Project *project,Xctrl *xctrl,QWidget *parent) 
     vbox->addWidget(gdefault);
     vbox->addStretch(1);
     group->setLayout(vbox);
+
+    gstyle=new QGroupBox("Способ расчета");
+    garea=new QRadioButton("Центры областей");
+    gbox=new QRadioButton("Лучи");
+    gbox->setChecked(true);
+    QVBoxLayout *vb=new QVBoxLayout;
+    vb->addWidget(garea);
+    vb->addWidget(gbox);
+    vb->addStretch(1);
+    gstyle->setLayout(vb);
+
     grid=new QGridLayout;
     grid->addWidget(group,0,0);
+    grid->addWidget(gstyle,1,0);
+
     cdates=new QComboBox;
     cdates->addItems(getAllDates());
     ccomments=new QComboBox;
@@ -26,7 +39,7 @@ ViewCalculate::ViewCalculate(    Project *project,Xctrl *xctrl,QWidget *parent) 
     QFormLayout *fbox=new QFormLayout;
     fbox->addRow("Выберите дату",cdates);
     fbox->addRow("Выберите заметку",ccomments);
-    grid->addLayout(fbox,1,0);
+    grid->addLayout(fbox,2,0);
     QHBoxLayout *hbox=new QHBoxLayout;
     btnLoad=new QPushButton("Загрузить данные");
     connect(btnLoad,SIGNAL(clicked()),this,SLOT(loadData()));
@@ -37,10 +50,10 @@ ViewCalculate::ViewCalculate(    Project *project,Xctrl *xctrl,QWidget *parent) 
     btnPush=new QPushButton("Брызнуть");
     connect(btnPush,SIGNAL(clicked()),this,SLOT(pushSpray()));
     hbox->addWidget(btnPush);
-    grid->addLayout(hbox,2,0);
+    grid->addLayout(hbox,3,0);
     ltext=new QTextEdit("Протокол");
     ltext->setMinimumSize(ini.getSize("protocol/size"));
-    grid->addWidget(ltext,3,0);
+    grid->addWidget(ltext,4,0);
     emptyTable();
     table();
     setLayout(grid);
@@ -107,7 +120,9 @@ void ViewCalculate::loadData()
 
 void ViewCalculate::calculateData()
 {
-    calcData->calculate();
+    if (gbox->isChecked())    calcData->calculate();
+    if (garea->isChecked())    calcData->calcAreal();
+
     QString text;
     foreach (auto line, calcData->protocol) {
         text.append(line+"\n");
@@ -131,7 +146,7 @@ void ViewCalculate::calculateData()
         row++;
     }
     wtable->resizeColumnsToContents();
-    grid->addWidget(wtable,0,1,4,4);
+    grid->addWidget(wtable,0,1,5,5);
     update();
 }
 
@@ -212,5 +227,5 @@ void ViewCalculate::table()
         row++;
     }
     wtable->resizeColumnsToContents();
-    grid->addWidget(wtable,0,1,4,4);
+    grid->addWidget(wtable,0,1,5,5);
 }

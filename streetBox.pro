@@ -35,8 +35,10 @@ SOURCES += \
     viewsetup.cpp \
     xctrl/bogko.cpp \
     xctrl/dialogaddemptyxt.cpp \
+    xctrl/editareal.cpp \
     xctrl/readjsonfile.cpp \
     xctrl/sumgraph.cpp \
+    xctrl/viewareal.cpp \
     xctrl/viewcalculate.cpp \
     xctrl/viewpoints.cpp \
     xctrl/viewstrategy.cpp \
@@ -65,8 +67,10 @@ HEADERS += \
     viewsetup.h \
     xctrl/bogko.h \
     xctrl/dialogaddemptyxt.h \
+    xctrl/editareal.h \
     xctrl/readjsonfile.h \
     xctrl/sumgraph.h \
+    xctrl/viewareal.h \
     xctrl/viewcalculate.h \
     xctrl/viewpoints.h \
     xctrl/viewstrategy.h \

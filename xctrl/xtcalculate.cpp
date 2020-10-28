@@ -66,7 +66,8 @@ XTCalculate::XTCalculate(Project *project,Xctrl *xctrl)
     if(error)   protocol.insert(0,"Есть ошибки!");
     else protocol.insert(0,"Ошибок нет.");
 }
-//Собственно расчет планов XT
+
+//Собственно расчет планов XT по циклограмме
 void XTCalculate::calculate()
 {
     int endTime=xctrl->Step;
@@ -112,6 +113,49 @@ void XTCalculate::calculate()
         if (plan==0)    v[3]="Нет плана";
         else            v[3]=QString::number(plan)+" "+getDescription(plan);
         v[4]=QString::asprintf("%.2f",f);
+        fin.append(v);
+        beginTime=endTime;
+        endTime+=xctrl->Step;
+    }
+}
+
+void XTCalculate::calcAreal()
+{
+    int endTime=xctrl->Step;
+    int beginTime=0;
+    while(endTime<24*60){
+        int l=0,r=0;
+        QVector<QString> v(10);
+        v[0]=QString::asprintf("%02d:%02d",endTime/60,endTime%60);
+        QString line;
+        foreach (auto c, xctrl->Calculates) {
+            l=qMax(l,dus[c.ID].getFlow(c.ChanL,beginTime,endTime));
+            line+=" ("+QString::number(dus[c.ID].getFlow(c.ChanL,beginTime,endTime))+",";
+            r=qMax(r,dus[c.ID].getFlow(c.ChanR,beginTime,endTime));
+            line+=QString::number(dus[c.ID].getFlow(c.ChanR,beginTime,endTime))+")";
+        }
+        protocol.append(v[0]+" "+line);
+        v[1]=QString::number(l);
+        v[2]=QString::number(r);
+        int plan=0;
+        ulong dist=__INT_MAX__;
+        QString desc="";
+        foreach (auto ar, xctrl->Areals) {
+            ulong ld=l-ar.L;
+            ulong rd=r-ar.R;
+            ulong d=(ld*ld)+(rd*rd);
+            if (d<dist){
+                dist=d;
+                plan=ar.Plan;
+                desc=ar.Description;
+
+            }
+        }
+        if(l==0) l=1;
+        if(r==0) r=99999;
+        if (plan==0)    v[3]="Нет плана";
+        else            v[3]=QString::number(plan)+" "+desc;
+        v[4]=QString::asprintf("%.2f",(float)l/(float)r);
         fin.append(v);
         beginTime=endTime;
         endTime+=xctrl->Step;

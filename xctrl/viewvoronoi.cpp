@@ -93,10 +93,17 @@ void ViewVoronoi::mouseMoveEvent(QMouseEvent *event)
 void ViewVoronoi::CreateColor()
 {
     color[0]=qRgb(255,255,255);
-    foreach (auto s,v->sts ) {
-        color[s.PlanL]=(qRgb(rand() % 200 + 50, rand() % 200 + 55, rand() % 200 + 50));
-        color[s.PlanR]=(qRgb(rand() % 200 + 50, rand() % 200 + 55, rand() % 200 + 50));
-        color[s.PlanM]=(qRgb(rand() % 200 + 50, rand() % 200 + 55, rand() % 200 + 50));
+    if(v->sts.size()!=0){
+        foreach (auto s,v->sts ) {
+            color[s.PlanL]=(qRgb(rand() % 200 + 50, rand() % 200 + 55, rand() % 200 + 50));
+            color[s.PlanR]=(qRgb(rand() % 200 + 50, rand() % 200 + 55, rand() % 200 + 50));
+            color[s.PlanM]=(qRgb(rand() % 200 + 50, rand() % 200 + 55, rand() % 200 + 50));
+        }
+    }
+    if(v->plans.size()!=0){
+        foreach (auto p, v->plans) {
+            color[p]=(qRgb(rand() % 200 + 50, rand() % 200 + 55, rand() % 200 + 50));
+        }
     }
 }
 

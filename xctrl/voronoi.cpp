@@ -50,6 +50,15 @@ void Voronoi::addSet(Strategy st)
     sts.append(st);
 }
 
+void Voronoi::addAreal(Areal ar)
+{
+    Point p(ar.R,ar.L);
+    p.w=p.w*delW;
+    p.h=p.h*delH;
+    points.append(p);
+    plans.append(ar.Plan);
+}
+
 void Voronoi::addBogoses(QVector<Point> bogs)
 {
     bogoses.clear();
@@ -100,6 +109,28 @@ void Voronoi::makeDiagramm()
     }
 }
 
+void Voronoi::makeAreals()
+{
+    ulong d;
+    for (int hh = 0; hh < height; ++hh) {
+        for (int ww = 0; ww < width; ++ww) {
+            int ind=-1;
+            ulong dist=__INT_MAX__;
+            for (int it=0;it<points.size();++it){
+                d=points[it].DistanceSqrd(ww,hh);
+                if (d<dist){
+                    dist=d;
+                    ind=it;
+                }
+            }
+            if(ind>-1){
+                planMap->SetPlan(ww,hh,plans[ind]);
+            }
+        }
+    }
+
+}
+
 uint8_t Voronoi::GetPlan(int w, int h)
 {
 
@@ -118,6 +149,13 @@ QVector<Point> Voronoi::CreatePoints(int count)
 
 PlanMap::PlanMap()
 {
+    width_=MAX_W;
+    height_=MAX_H;
+
+    QVector<uint8_t> t(MAX_H,0);
+    for (int i = 0; i < MAX_W; ++i) {
+        map.append(t);
+    }
 
 }
 
@@ -171,6 +209,13 @@ Point Point::mediana(int nw, int nh)
 {
     Point p((nw-w)/2,(nh-h)/2);
     return p;
+}
+
+ulong Point::DistanceSqrd(int w, int h)
+{
+    int wd=w-this->w;
+    int hd=h-this->h;
+    return ((ulong)wd*(ulong)wd)+((ulong)hd*(ulong)hd);
 }
 
 Point Point::summ(int nw, int nh,int bw,int bh)

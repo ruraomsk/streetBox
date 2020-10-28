@@ -85,6 +85,9 @@ Xctrl::Xctrl(QMap<QString, QVariant> map)
     foreach(auto s,map["Strategys"].toList()){
         Strategys.append(Strategy(s.toMap()));
     }
+    foreach(auto s,map["Areals"].toList()){
+        Areals.append(Areal(s.toMap()));
+    }
     foreach(auto s,map["Calculates"].toList()){
         Calculates.append(Calc(s.toMap()));
     }
@@ -125,6 +128,15 @@ QString Xctrl::ToJSON()
         result.remove(result.length()-1,1);
     }
     result.append("],");
+    result.append("\"Areals\":[");
+    if (Areals.size()>0){
+        foreach (auto var, Areals) {
+            result.append(var.ToJSON());
+            result.append(",");
+        }
+        result.remove(result.length()-1,1);
+    }
+    result.append("],");
     result.append("\"Calculates\":[");
     if (Calculates.size()>0){
         foreach (auto var, Calculates) {
@@ -140,6 +152,11 @@ QString Xctrl::ToJSON()
 void Xctrl::AddStrategy(Strategy strat)
 {
     Strategys.append(strat);
+}
+
+void Xctrl::AddAreal(Areal areal)
+{
+    Areals.append(areal);
 }
 
 void Xctrl::AddCalc(Calc calc)
@@ -213,4 +230,34 @@ QString Result::ToJSON()
     QString result;
     result.append(QString::asprintf("{\"il\":%d,\"ir\":%d}",Ileft,Iright));
     return result;
+}
+
+Areal::Areal(int l, int r, int plan, QString description)
+{
+    L=l;
+    R=r;
+    Plan=plan;
+    Description=description;
+
+}
+
+Areal::Areal(QMap<QString, QVariant> map)
+{
+    L=map["l"].toInt();
+    R=map["r"].toInt();
+    Plan=map["plan"].toInt();
+    Description=map["desc"].toString();
+}
+
+QString Areal::ToJSON()
+{
+    QString result;
+    result.append(QString::asprintf("{\"l\":%d,\"r\":%d,\"plan\":%d,\"desc\":\"",L,R,Plan));
+    result.append(Description+"\"}");
+    return result;
+}
+
+bool Areal::Compare(Areal &ar1, Areal &ar2)
+{
+    return ar1.L<ar2.L;
 }
