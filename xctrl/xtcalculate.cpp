@@ -83,7 +83,7 @@ void XTCalculate::calculate()
             line+=" ("+QString::number(dus[c.ID].getFlow(c.ChanL,beginTime,endTime))+",";
             r=qMax(r,dus[c.ID].getFlow(c.ChanR,beginTime,endTime));
             line+=QString::number(dus[c.ID].getFlow(c.ChanR,beginTime,endTime))+")";
-            if(r==0)r=999999;
+            if(r==0)r=1;
             if(l==0)l=1;
             float f=(float)l/(float)r;
             fs.append(f);
