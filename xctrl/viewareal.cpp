@@ -41,7 +41,7 @@ void ViewAreal::removeSelected()
     QModelIndex index=m_view->selectionModel()->currentIndex();
     stable->removeSelected(index);
     project->isChanged=true;
-    redraw();
+    emit updated();
 }
 
 void ViewAreal::updateTable()

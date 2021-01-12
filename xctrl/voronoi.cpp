@@ -177,15 +177,15 @@ PlanMap::~PlanMap()
 
 void PlanMap::SetPlan(int w, int h, uint8_t plan)
 {
-    if(w>width_) return;
-    if(h>height_) return;
+    if(w>=width_) return;
+    if(h>=height_) return;
     map[w][h]=plan;
 }
 
 uint8_t PlanMap::get(int w, int h)
 {
-    if(w>width_) return 0;
-    if(h>height_) return 0;
+    if(w>=width_) return 0;
+    if(h>=height_) return 0;
     return map[w][h];
 
 }
