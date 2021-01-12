@@ -64,7 +64,7 @@ QVector<Point> ViewCalculate::getSprays()
 {
     QVector<Point> result;
     foreach (auto var, calcData->fin) {
-        Point p(var[1].toInt(),var[2].toInt());
+        Point p(var[2].toInt(),var[1].toInt());
         result.append(p);
     }
     return result;
