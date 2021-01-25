@@ -21,7 +21,12 @@ ViewCalculate::ViewCalculate(    Project *project,Xctrl *xctrl,QWidget *parent) 
     gstyle=new QGroupBox("Способ расчета");
     garea=new QRadioButton("Центры областей");
     gbox=new QRadioButton("Лучи");
-    gbox->setChecked(true);
+    if (xctrl->UseStrategy){
+        gbox->setChecked(true);
+    } else {
+        garea->setChecked(true);
+    }
+
     QVBoxLayout *vb=new QVBoxLayout;
     vb->addWidget(garea);
     vb->addWidget(gbox);
@@ -120,6 +125,12 @@ void ViewCalculate::loadData()
 
 void ViewCalculate::calculateData()
 {
+    if (gbox->isChecked()){
+        xctrl->UseStrategy=true;
+    } else {
+        xctrl->UseStrategy=false;
+    }
+
     if (gbox->isChecked())    calcData->calculate();
     if (garea->isChecked())    calcData->calcAreal();
 

@@ -143,6 +143,55 @@ QString Support::CorrectNameFile(QString namefile,QString list)
     return namefile;
 }
 
+QStringList Support::listXT()
+{
+    QStringList result;
+    QSqlQuery query;
+    query.exec("select region,area,subarea from public.xctrl order by region,area,subarea ;");
+    while(query.next()){
+        QString ww;
+        ww.append("Регион="+QString::number(query.value(0).toInt()));
+        ww.append(":");
+        ww.append("Район="+QString::number(query.value(1).toInt()));
+        ww.append(":");
+        ww.append("Подрайон="+QString::number(query.value(2).toInt()));
+        result.append(ww);
+    }
+    return result;
+
+}
+
+QString Support::getXT(int region, int area, int subarea)
+{
+    QSqlQuery query;
+    QString w;
+    w.append(QString::asprintf("select state from public.xctrl where region=%d and area=%d and subarea=%d ;",region,area,subarea));
+    query.exec(w);
+    if (query.next()){
+        return query.value(0).toString();
+    }
+    return "";
+}
+
+void Support::saveXT(int region, int area, int subarea, QString state)
+{
+    QString w,q;
+    QSqlQuery query;
+    w.append(QString::asprintf("select state from public.xctrl where region=%d and area=%d and subarea=%d;",region,area,subarea));
+    query.exec(w);
+
+    if (query.next()){
+        q="update public.xctrl set state='"+state+"' ";
+        q.append(QString::asprintf( "where region=%d and area=%d and subarea=%d;",region,area,subarea));
+    }else {
+        q="INSERT INTO public.xctrl(region, area, subarea, state) VALUES (";
+        q.append(QString::asprintf( "%d,%d,%d,'",region,area,subarea));
+        q+=state+"');";
+    }
+    query.exec(q);
+
+}
+
 bool Support::compare(int time, int ntime, int step)
 {
     if (time+step>24*60 && ntime==0){

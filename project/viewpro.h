@@ -17,6 +17,7 @@
 #include "viewcross.h"
 #include "setemptydata.h"
 #include "formgetdbcross.h"
+#include "formgetdbxctrl.h"
 #include "readcsvfile.h"
 #include "setdbdata.h"
 #include "setcsvdata.h"
@@ -43,6 +44,8 @@ public:
     void repairDataCross();
     void AddXtEmpty();
     void AddXtFromJSON();
+    void AddXtFromBD();
+    void SaveXTToBD();
     void DeleteXt();
     void SaveToJson();
 private:

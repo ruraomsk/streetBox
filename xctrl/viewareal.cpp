@@ -104,7 +104,7 @@ QVariant ArealTable::data(const QModelIndex &index, int role) const
     case 0: return  s.L;
     case 1: return s.R;
     case 2: return s.Plan;
-    case 7: return s.Description;
+    case 3: return s.Description;
     }
     return QVariant();
 }

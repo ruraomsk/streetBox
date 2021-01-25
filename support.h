@@ -29,6 +29,9 @@ public:
     static QList<QString> getElite(int step);
     static bool isVerStep(int step);
     static QString CorrectNameFile(QString namefile,QString list);
+    static QStringList listXT();
+    static QString getXT(int region,int area,int subarea);
+    static void saveXT(int region,int area,int subarea,QString state);
 private:
     static bool compare(int time,int ntime,int step);
 };

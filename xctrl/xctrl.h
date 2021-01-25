@@ -75,6 +75,7 @@ public:
     QString name="ХТ подрайона";               //Описание ХТ
     bool Switch=false;                    //true призводим расчет нового плана `json:"switch"`
     bool Release=false;                   //true выполняем план `json:"release"`
+    bool UseStrategy=false;             //true выполняем стратегию Лучи  иначе стратегия Области
     int Step=15;                       //Время цикла для данного подрайона `json:"step"`
     int Remain=Step;                     //Остаток времени для нового расчета `json:"rem"`
     QDateTime LastTime ;            //Последний расчет характерной точки `json:"ltime"`
@@ -84,7 +85,8 @@ public:
     int Left=1000;                  //Максимум для прямого направления `json:"left"`
     int Right=1000;                 //Максимум для обратного направления `json:"right"`
     QStringList Status;             //Состояние расчетов и итоги проверки `json:"status"`
-    QList<Strategy> Strategys;      //Правила перехода циклограммой
+    QList<Strategy> Strategys;      //Правила перехода циклограммой B
+
     QList<Areal> Areals;            //Правила перехода по областям
     QList<Calc> Calculates;         //Правила расчета характерной точки
     QList<Result> Results;          //Промежуточные результаты

@@ -69,6 +69,7 @@ Xctrl::Xctrl(QMap<QString, QVariant> map)
     Remain=map["rem"].toInt();
     Switch=map["switch"].toBool();
     Release=map["release"].toBool();
+    UseStrategy=map["use"].toBool();
     PKNow=map["pknow"].toInt();
     PKLast=map["pklast"].toInt();
     PKCalc=map["pkcalc"].toInt();
@@ -82,10 +83,10 @@ Xctrl::Xctrl(QMap<QString, QVariant> map)
     foreach (auto r, map["Results"].toList()) {
         Results.append(Result(r.toMap()));
     }
-    foreach(auto s,map["Strategys"].toList()){
+    foreach(auto s,map["StrategyB"].toList()){
         Strategys.append(Strategy(s.toMap()));
     }
-    foreach(auto s,map["Areals"].toList()){
+    foreach(auto s,map["StrategyA"].toList()){
         Areals.append(Areal(s.toMap()));
     }
     foreach(auto s,map["Calculates"].toList()){
@@ -98,6 +99,7 @@ QString Xctrl::ToJSON()
     QString result;
     result.append(QString::asprintf("{\"region\":%d,\"area\":%d,\"subarea\":%d,",Region,Area,SubArea));
     result.append(QString::asprintf("\"switch\":%s,\"release\":%s,\"step\":%d,\"rem\":%d,",Switch?"true":"false",Release?"true":"false",Step,Remain));
+    result.append(QString::asprintf("\"use\":%s,",UseStrategy?"true":"false"));
     result.append(QString::asprintf("\"pkcalc\":%d,\"pknow\":%d,\"pklast\":%d,",PKCalc,PKNow,PKLast));
     result.append(QString::asprintf("\"left\":%d,\"right\":%d,\"status\":[",Left,Right));
     if (Status.size()>0){
@@ -119,7 +121,7 @@ QString Xctrl::ToJSON()
         result.remove(result.length()-1,1);
     }
     result.append("],");
-    result.append("\"Strategys\":[");
+    result.append("\"StrategyB\":[");
     if (Strategys.size()>0){
         foreach (auto var, Strategys) {
             result.append(var.ToJSON());
@@ -128,7 +130,7 @@ QString Xctrl::ToJSON()
         result.remove(result.length()-1,1);
     }
     result.append("],");
-    result.append("\"Areals\":[");
+    result.append("\"StrategyA\":[");
     if (Areals.size()>0){
         foreach (auto var, Areals) {
             result.append(var.ToJSON());
@@ -190,13 +192,13 @@ Strategy::Strategy(int l, int r, int planl, int planm, int planr, float fl, floa
 
 Strategy::Strategy(QMap<QString, QVariant> map)
 {
-    L=map["l"].toInt();
-    R=map["r"].toInt();
-    PlanL=map["planl"].toInt();
-    PlanR=map["planr"].toInt();
-    PlanM=map["planm"].toInt();
-    Fl=map["fl"].toFloat();
-    Fr=map["fr"].toFloat();
+    L=map["xleft"].toInt();
+    R=map["xright"].toInt();
+    PlanL=map["pkl"].toInt();
+    PlanR=map["pkr"].toInt();
+    PlanM=map["pks"].toInt();
+    Fl=map["vleft"].toFloat();
+    Fr=map["vright"].toFloat();
     Description=map["desc"].toString();
 }
 
@@ -208,7 +210,7 @@ bool Strategy::Compare(Strategy &st1, Strategy &st2)
 QString Strategy::ToJSON()
 {
     QString result;
-    result.append(QString::asprintf("{\"l\":%d,\"r\":%d,\"planl\":%d,\"planr\":%d,\"planm\":%d,\"fl\":%f,\"fr\":%f,\"desc\":\"",L,R,PlanL,PlanR,PlanM,Fl,Fr));
+    result.append(QString::asprintf("{\"xleft\":%d,\"xright\":%d,\"pkl\":%d,\"pkr\":%d,\"pks\":%d,\"vleft\":%f,\"vright\":%f,\"desc\":\"",L,R,PlanL,PlanR,PlanM,Fl,Fr));
     result.append(Description+"\"}");
     return result;
 }
@@ -243,16 +245,16 @@ Areal::Areal(int l, int r, int plan, QString description)
 
 Areal::Areal(QMap<QString, QVariant> map)
 {
-    L=map["l"].toInt();
-    R=map["r"].toInt();
-    Plan=map["plan"].toInt();
+    L=map["xleft"].toInt();
+    R=map["xright"].toInt();
+    Plan=map["pk"].toInt();
     Description=map["desc"].toString();
 }
 
 QString Areal::ToJSON()
 {
     QString result;
-    result.append(QString::asprintf("{\"l\":%d,\"r\":%d,\"plan\":%d,\"desc\":\"",L,R,Plan));
+    result.append(QString::asprintf("{\"xleft\":%d,\"xright\":%d,\"pk\":%d,\"desc\":\"",L,R,Plan));
     result.append(Description+"\"}");
     return result;
 }

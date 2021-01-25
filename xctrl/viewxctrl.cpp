@@ -65,6 +65,16 @@ void ViewXctrl::SaveToJSON(QString nameFile)
 
 }
 
+QString ViewXctrl::SaveToJSON()
+{
+    return xctrl->ToJSON().toUtf8();
+}
+
+Xctrl* ViewXctrl::getXctrl()
+{
+    return xctrl;
+}
+
 void ViewXctrl::ChangeXT()
 {
     if(xctrl->name!=lname->text()){

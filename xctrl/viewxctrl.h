@@ -35,6 +35,8 @@ public:
     explicit ViewXctrl(Project *project,Xctrl *xctrl,QWidget *parent = nullptr);
     QString getName();
     void SaveToJSON(QString namefile);
+    QString SaveToJSON();
+    Xctrl* getXctrl();
 signals:
 
 private slots:

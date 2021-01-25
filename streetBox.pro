@@ -20,6 +20,7 @@ SOURCES += \
     mainwindow.cpp \
     project/cross.cpp \
     project/formgetdbcross.cpp \
+    project/formgetdbxctrl.cpp \
     project/formgetemptycross.cpp \
     project/project.cpp \
     project/readcsvfile.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
     mainwindow.h \
     project/cross.h \
     project/formgetdbcross.h \
+    project/formgetdbxctrl.h \
     project/formgetemptycross.h \
     project/project.h \
     project/readcsvfile.h \

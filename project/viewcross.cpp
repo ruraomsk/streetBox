@@ -74,7 +74,7 @@ void ViewCross::itemCkliked()
     update();
 }
 
-void ViewCross::summChanged(int state)
+void ViewCross::summChanged()
 {
     cross->summ=lsumm->isChecked();
     table();

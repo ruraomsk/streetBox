@@ -92,12 +92,18 @@ void MainWindow::createAtions(){
     addXtFromJSON=new QAction(QIcon(":/images/addXtFromJson.png"),"Добавить XT из файла JSON",this);
     addXtFromJSON->setStatusTip("Добавляется новый ХТ из файла в формате JSON");
     connect(addXtFromJSON,SIGNAL(triggered()),this,SLOT(AddXtFromJSON()));
+    addXtFromBD=new QAction(QIcon(":/images/bd.png"),"Добавить XT из БД",this);
+    addXtFromBD->setStatusTip("Добавляется новый ХТ из БД");
+    connect(addXtFromBD,SIGNAL(triggered()),this,SLOT(AddXtFromBD()));
     deleteXt=new QAction(QIcon(":/images/removeCross.png"),"Удалить текущий ХТ",this);
     deleteXt->setStatusTip("Удаляется текущий ХТ из проекта");
     connect(deleteXt,SIGNAL(triggered()),this,SLOT(DeleteXt()));
     saveToJSON=new QAction(QIcon(":/images/addXtFromJson.png"),"Сохранить XT в файл JSON",this);
     saveToJSON->setStatusTip("Сохраняется текущий ХТ в файл в формате JSON");
     connect(saveToJSON,SIGNAL(triggered()),this,SLOT(SaveToJSON()));
+    saveXTToBD=new QAction(QIcon(":/images/bd.png"),"Сохранить XT в БД",this);
+    saveXTToBD->setStatusTip("Сохраняется текущий ХТ в БД");
+    connect(saveXTToBD,SIGNAL(triggered()),this,SLOT(SaveXTToBD()));
 
 }
 
@@ -127,11 +133,13 @@ void MainWindow::createMenus()
     xtMenu->setDisabled(true);
     xtMenu->addAction(addXtEmpty);
     xtMenu->addAction(addXtFromJSON);
+    xtMenu->addAction(addXtFromBD);
     xtMenu->addAction(deleteXt);
+    xtMenu->addAction(saveToJSON);
+    xtMenu->addAction(saveXTToBD);
 
     exportMenu=new QMenu("&Экпорт");
     exportMenu->addAction(exportCrossToCSV);
-    exportMenu->addAction(saveToJSON);
     //    repairMenu=new QMenu("&Исправить ошибки");
     //    importMenu->addAction(importCrossFromCSV);
     editMenu->addAction(repairDataCross);
@@ -379,9 +387,19 @@ void MainWindow::AddXtFromJSON()
 
 }
 
+void MainWindow::AddXtFromBD()
+{
+    viewPro->AddXtFromBD();
+}
+
 void MainWindow::SaveToJSON()
 {
     viewPro->SaveToJson();
+}
+
+void MainWindow::SaveXTToBD()
+{
+    viewPro->SaveXTToBD();
 }
 
 void MainWindow::DeleteXt()

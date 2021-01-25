@@ -194,7 +194,6 @@ void ViewPro::AddXtEmpty()
         project->isChanged=true;
         appendTabCross();
     };
-//    qDebug()<<"AddXtEmpty";
 }
 
 void ViewPro::AddXtFromJSON()
@@ -204,6 +203,28 @@ void ViewPro::AddXtFromJSON()
         project->isChanged=true;
         appendTabCross();
     };
+}
+
+void ViewPro::AddXtFromBD()
+{
+    FormGetDBXctrl rd(project,this);
+    if (rd.exec()==QDialog::Accepted) {
+        project->isChanged=true;
+        appendTabCross();
+    };
+}
+
+void ViewPro::SaveXTToBD()
+{
+    if(!isXT()) return;
+        ViewXctrl *x=static_cast<ViewXctrl*>(tab->widget(tab->currentIndex()));
+        QString state=x->SaveToJSON().toUtf8();
+        auto xx=x->getXctrl();
+        Support::saveXT(xx->Region,xx->Area,xx->SubArea,state);
+        Support::Message("XT сохранен в БД");
+    return;
+//    qDebug()<<"SaveXTToBD";
+
 }
 
 void ViewPro::DeleteXt()

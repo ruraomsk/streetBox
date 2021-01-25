@@ -45,7 +45,9 @@ private slots:
     void SetupEdit();
     void AddXtEmpty();
     void AddXtFromJSON();
+    void AddXtFromBD();
     void SaveToJSON();
+    void SaveXTToBD();
     void DeleteXt();
 private:
     void createAtions();
@@ -92,7 +94,9 @@ private:
 
     QAction *addXtEmpty;
     QAction *addXtFromJSON;
+    QAction *addXtFromBD;
     QAction *saveToJSON;
+    QAction *saveXTToBD;
     QAction *deleteXt;
     QAction *editSetup;
 

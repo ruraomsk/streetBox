@@ -44,7 +44,7 @@ private slots:
     void changeComment();
     void saveTable(int row,int column);
     void itemCkliked();
-    void summChanged(int);
+    void summChanged();
     void deleteDate();
     void changeDate();
     void ChangedInterval(const QString&);
