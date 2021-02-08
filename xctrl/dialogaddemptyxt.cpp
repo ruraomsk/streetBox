@@ -8,7 +8,7 @@ DialogAddEmptyXT::DialogAddEmptyXT(Project *project, QWidget *parent) :QDialog(p
     lregion=new QLineEdit(QString::number(project->Region),this);
     larea=new QLineEdit(QString::number(project->Area),this);
     lsubarea=new QLineEdit(QString::number(project->SubArea),this);
-    lstep=new QLineEdit(QString::number(project->Step),this);
+    lstep=new QLineEdit(QString::number(project->StepXT),this);
 
     QFormLayout *hbox=new QFormLayout();
     hbox->addRow("Имя ХТ",lname);
@@ -43,8 +43,7 @@ void DialogAddEmptyXT::setData()
         Support::ErrorMessage("Интервал расчета не верный");
         return;
     }
-    Xctrl *xctrl=new Xctrl(lregion->text().toInt(),larea->text().toInt(),lsubarea->text().toInt());
-    xctrl->Step=lstep->text().toInt();
+    Xctrl *xctrl=new Xctrl();
     xctrl->name=lname->text();
     project->xctrls.append(xctrl);
     emit accept();

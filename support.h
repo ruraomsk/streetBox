@@ -32,6 +32,9 @@ public:
     static QStringList listXT();
     static QString getXT(int region,int area,int subarea);
     static void saveXT(int region,int area,int subarea,QString state);
+
+    static int stepXT;
+    static bool use;
 private:
     static bool compare(int time,int ntime,int step);
 };

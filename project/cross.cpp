@@ -52,7 +52,7 @@ void Cross::SetData(QDate date, bool rnd)
         int m=min%60;
         auto stat=Statistic(count,1,Step,hour,m);
         for (int k = 0; k < Chanels; ++k) {
-            if (rnd) stat.AddData(DataStat(k+1,0,Support::RandomBetween(1,1000)));
+            if (rnd) stat.AddData(DataStat(k+1,0,Support::RandomBetween(1,35)));
             else stat.AddData(DataStat(k+1,0,0));
         }
         arch.AddStatistic(stat);

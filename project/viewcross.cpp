@@ -14,7 +14,7 @@ ViewCross::ViewCross(Project *project,Cross *cross,QWidget *parent) : QWidget(pa
     table();
     wgraph=new QScrollArea;
     graph();
-    this->show();
+//    this->show();
 }
 
 
@@ -216,7 +216,7 @@ void ViewCross::head()
     fbox->addRow("Дата измерений",combo);
     lsumm=new QCheckBox("Суммировать");
     lsumm->setChecked(cross->summ);
-    connect(lsumm,SIGNAL(stateChanged(int)),this,SLOT(summChanged(int)));
+    connect(lsumm,SIGNAL(stateChanged(int)),this,SLOT(summChanged()));
     linterval=new QComboBox;
     linterval->addItems(Support::getElite(cross->Step));
     if(linterval->count()==0){

@@ -37,6 +37,7 @@ public:
     void SaveToJSON(QString namefile);
     QString SaveToJSON();
     Xctrl* getXctrl();
+    QList<QVector<QString>> getMatrix();
 signals:
 
 private slots:
@@ -53,11 +54,7 @@ private:
 
     Project *project;
     Xctrl *xctrl;
-    QLineEdit *lregion;         //Регион
-    QLineEdit *larea;           //Район
-    QLineEdit *lsubarea;        //Подрайон
     QLineEdit *lname;           //Описание XT
-    QLineEdit *lstep;           //Интервал времени
     QLineEdit *lLeftRel;        //Отношение для прямого направления
     QLineEdit *lRightRel;        //Отношение для обратного направления
 

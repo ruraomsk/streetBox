@@ -33,7 +33,7 @@ ViewAreal::ViewAreal(Project *project, Xctrl *xctrl, QWidget *parent): QWidget(p
     grid->addWidget(voroni,0,2,2,2);
 
     setLayout( grid );
-    show();
+//    show();
 }
 
 void ViewAreal::removeSelected()

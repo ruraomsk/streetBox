@@ -5,8 +5,10 @@
 #include <QList>
 #include <QRandomGenerator>
 #include <QStyleFactory>
+#include "common.h"
 
 Setup ini("streetBox.ini");
+Common common;
 
 int main(int argc, char *argv[])
 {

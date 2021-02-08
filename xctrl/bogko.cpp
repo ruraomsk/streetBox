@@ -3,6 +3,7 @@
 
 Bogko::Bogko(QList<Strategy> strs)
 {
+    if (strs.size()==0) return;
     this->strates=strs;
     centrals.clear();
     std::sort(strates.begin(),strates.end(),&Strategy::Compare);

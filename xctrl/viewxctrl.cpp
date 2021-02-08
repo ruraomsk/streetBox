@@ -40,7 +40,7 @@ ViewXctrl::ViewXctrl(Project *project,Xctrl *xctrl,QWidget *parent) : QWidget(pa
     QGridLayout *maingrid=new QGridLayout(this);
     maingrid->addWidget(tab,0,1);
     setLayout(maingrid);
-    this->show();
+//    this->show();
 
 
 }
@@ -75,6 +75,11 @@ Xctrl* ViewXctrl::getXctrl()
     return xctrl;
 }
 
+QList<QVector<QString> > ViewXctrl::getMatrix()
+{
+    return vcalc->getMatrix();
+}
+
 void ViewXctrl::ChangeXT()
 {
     if(xctrl->name!=lname->text()){
@@ -86,14 +91,6 @@ void ViewXctrl::ChangeXT()
         }
     }
     xctrl->name=lname->text();
-    xctrl->Region=lregion->text().toInt();
-    xctrl->Area=larea->text().toInt();
-    xctrl->SubArea=lsubarea->text().toInt();
-    if(!Support::isVerStep(lstep->text().toInt())){
-        Support::ErrorMessage("Интервал вычисления не верный");
-        return;
-    }
-    xctrl->Step=lstep->text().toInt();
     xctrl->Left=lLeftRel->text().toInt();
     xctrl->Right=lRightRel->text().toInt();
     project->isChanged=true;
@@ -167,26 +164,14 @@ void ViewXctrl::top()
 //        xctrl->Left=qMax(xctrl->Left,s.L);
 //        xctrl->Right=qMax(xctrl->Right,s.R);
 //    }
-    lregion=new QLineEdit(QString::number(xctrl->Region),this);
-    lregion->setMaximumSize(maxSize);
-    larea=new QLineEdit(QString::number(xctrl->Area),this);
-    larea->setMaximumSize(maxSize);
-    lsubarea=new QLineEdit(QString::number(xctrl->SubArea),this);
-    lsubarea->setMaximumSize(maxSize);
     lname=new QLineEdit(xctrl->name,this);
     lname->setMaximumSize(maxSize);
-    lstep=new QLineEdit(QString::number(xctrl->Step),this);
-    lstep->setMaximumSize(maxSize);
     lLeftRel=new QLineEdit(QString::number(xctrl->Left),this);
     lLeftRel->setMaximumSize(maxSize);
     lRightRel=new QLineEdit(QString::number(xctrl->Right),this);
     lRightRel->setMaximumSize(maxSize);
     QFormLayout *hbox=new QFormLayout();
     hbox->addRow("Наименование XT",lname);
-    hbox->addRow("Регион",lregion);
-    hbox->addRow("Район",larea);
-    hbox->addRow("Подрайон",lsubarea);
-    hbox->addRow("Интервал времени",lstep);
     hbox->addRow("Максимум прямого",lLeftRel);
     hbox->addRow("Максимум обратного",lRightRel);
     QPushButton *okBtn=new QPushButton("Принять");

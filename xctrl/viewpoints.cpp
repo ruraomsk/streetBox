@@ -23,12 +23,13 @@ ViewPoints::ViewPoints(Project *project,Xctrl *xctrl,QWidget *parent) : QWidget(
     panelLayout->addWidget( bnAdd);
 
 
-    show();
+//    show();
 }
 
 void ViewPoints::removeSelected()
 {
     QModelIndex index=m_view->selectionModel()->currentIndex();
+    if (xctrl->Calculates.size()==1) return;
     ptable->removeSelected(index);
     project->isChanged=true;
 }
@@ -226,6 +227,7 @@ Qt::ItemFlags PointsTable::flags(const QModelIndex &index) const
 
 void PointsTable::removeSelected(const QModelIndex& index)
 {
+    if (xctrl->Calculates.size()==1) return;
     if(index.isValid()){
         beginRemoveRows(QModelIndex(),index.row(),index.row());
         xctrl->Calculates.removeAt(index.row());
@@ -238,8 +240,9 @@ void PointsTable::removeSelected(const QModelIndex& index)
 
 void PointsTable::addRecord()
 {
-    Calc c(xctrl->Region,xctrl->Area,0);
+    Calc c(1,1,0);
     int row=xctrl->Calculates.size();
+    if (row==1) return;
     beginInsertRows(QModelIndex(),row,row);
     xctrl->Calculates.append(c);
     errors.append("");

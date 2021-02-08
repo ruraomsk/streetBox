@@ -36,6 +36,7 @@ SetDBData::SetDBData(Cross *cross, QWidget *parent): QDialog(parent)
 
 void SetDBData::Changed(const QString &sdate)
 {
+    Q_UNUSED(sdate)
     table();
     wtable->update();
 }

@@ -46,50 +46,27 @@ public:
     float Fr;
     QString Description;
 };
-class Result{
-public:
-    Result(int il,int ir);
-    Result(QMap<QString, QVariant> map);
-    QString ToJSON();
-
-    int Ileft  ;                    //Интенсивность прямого направления `json:"il"`
-    int Iright ;                    //Интенсивность обратного направления `json:"ir"`
-};
 
 class Xctrl
 {
 public:
-    Xctrl(int region,int area,int subarea);
+    Xctrl();
     Xctrl(QMap<QString, QVariant> map);
     QString ToJSON();
     void AddStrategy(Strategy strat);
     void AddAreal(Areal areal);
 
     void AddCalc(Calc calc);
-    void AddResult(Result result);
     void AddStatus(QString status);
 
-    int Region;                     //Регион `json:"region"`
-    int Area;                       //Район `json:"area"`
-    int SubArea;                    //`json:"subarea"`
     QString name="ХТ подрайона";               //Описание ХТ
-    bool Switch=false;                    //true призводим расчет нового плана `json:"switch"`
-    bool Release=false;                   //true выполняем план `json:"release"`
-    bool UseStrategy=false;             //true выполняем стратегию Лучи  иначе стратегия Области
-    int Step=15;                       //Время цикла для данного подрайона `json:"step"`
-    int Remain=Step;                     //Остаток времени для нового расчета `json:"rem"`
-    QDateTime LastTime ;            //Последний расчет характерной точки `json:"ltime"`
-    int PKCalc=0;                     //Расчитанный ПК `json:"pkcalc"`
-    int PKNow=0;                      //Текущий ПК `json:"pknow"`
-    int PKLast=0;                     //Предыдущий ПК `json:"pklast"`
     int Left=1000;                  //Максимум для прямого направления `json:"left"`
     int Right=1000;                 //Максимум для обратного направления `json:"right"`
     QStringList Status;             //Состояние расчетов и итоги проверки `json:"status"`
-    QList<Strategy> Strategys;      //Правила перехода циклограммой B
 
+    QList<Strategy> Strategys;      //Правила перехода циклограммой B
     QList<Areal> Areals;            //Правила перехода по областям
     QList<Calc> Calculates;         //Правила расчета характерной точки
-    QList<Result> Results;          //Промежуточные результаты
 private:
 
 };

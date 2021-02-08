@@ -21,7 +21,7 @@ FormGetDbCross::FormGetDbCross(Project *proj, QWidget *parent):QDialog(parent)
     lregion=new QLineEdit(QString::number(project->Region),this);
     larea=new QLineEdit(QString::number(project->Area),this);
     lsubarea=new QLineEdit(lis[2],this);
-    lstep=new QLineEdit(QString::number(project->Step),this);
+    lstep=new QLineEdit(QString::number(project->StepDevice),this);
     lchanel=new QLineEdit(QString::number(project->Chanels),this);
     hbox->addRow("Номер перекрестка",lname);
     hbox->addRow("Описание перекрестка",ldesc);

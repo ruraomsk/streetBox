@@ -1,5 +1,5 @@
 #include "xtcalculate.h"
-
+extern Common common;
 XTCalculate::XTCalculate(Project *project,Xctrl *xctrl,QString comment)
 {
     this->project=project;
@@ -14,7 +14,7 @@ XTCalculate::XTCalculate(Project *project,Xctrl *xctrl,QString comment)
                 error=true;
             } else {
                 dus[val]=XTMatrix(m);
-                dus[val].adaptHour(xctrl->Step);
+                dus[val].adaptHour(common.stepXT);
             }
         }
     }
@@ -36,7 +36,7 @@ XTCalculate::XTCalculate(Project *project, Xctrl *xctrl, QDate date)
                 error=true;
             } else {
                 dus[val]=XTMatrix(m);
-                dus[val].adaptHour(xctrl->Step);
+                dus[val].adaptHour(common.stepXT);
             }
         }
     }
@@ -59,7 +59,7 @@ XTCalculate::XTCalculate(Project *project,Xctrl *xctrl)
                 error=true;
             } else {
                 dus[val]=XTMatrix(m);
-                dus[val].adaptHour(xctrl->Step);
+                dus[val].adaptHour(common.stepXT);
             }
         }
     }
@@ -70,7 +70,7 @@ XTCalculate::XTCalculate(Project *project,Xctrl *xctrl)
 //Собственно расчет планов XT по циклограмме
 void XTCalculate::calculate()
 {
-    int endTime=xctrl->Step;
+    int endTime=common.stepXT;
     int beginTime=0;
     while(endTime<24*60){
         int l=0,r=0;
@@ -110,18 +110,19 @@ void XTCalculate::calculate()
                 break;
             }
         }
-        if (plan==0)    v[3]="Нет плана";
-        else            v[3]=QString::number(plan)+" "+getDescription(plan);
+        if (plan==0)    v[3]="Нет КС";
+        else            v[3]=QString::number(plan);
         v[4]=QString::asprintf("%.2f",f);
+        v[5]=getDescription(plan);
         fin.append(v);
         beginTime=endTime;
-        endTime+=xctrl->Step;
+        endTime+=common.stepXT;
     }
 }
 
 void XTCalculate::calcAreal()
 {
-    int endTime=xctrl->Step;
+    int endTime=common.stepXT;
     int beginTime=0;
     while(endTime<24*60){
         int l=0,r=0;
@@ -153,12 +154,13 @@ void XTCalculate::calcAreal()
         }
         if(l==0) l=1;
         if(r==0) r=99999;
-        if (plan==0)    v[3]="Нет плана";
-        else            v[3]=QString::number(plan)+" "+desc;
+        if (plan==0)    v[3]="Нет КС";
+        else            v[3]=QString::number(plan);
         v[4]=QString::asprintf("%.2f",(float)l/(float)r);
+        v[5]=desc;
         fin.append(v);
         beginTime=endTime;
-        endTime+=xctrl->Step;
+        endTime+=common.stepXT;
     }
 }
 QList<int> XTCalculate::setListDU()
@@ -174,7 +176,7 @@ void XTCalculate::controlStep()
     foreach (auto val, setListDU()) {
         foreach (auto cr, project->crosses) {
             if(val!=cr->Number) continue;
-            if(cr->Step>xctrl->Step){
+            if(cr->Step>common.stepXT){
                 protocol.append(QString::asprintf("Перекресток %d имеет интервал %d больше чем нужно",cr->Number,cr->Step));
                 error=true;
             }

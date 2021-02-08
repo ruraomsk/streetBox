@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    common.cpp \
     main.cpp \
     mainwindow.cpp \
     project/cross.cpp \
@@ -37,7 +38,9 @@ SOURCES += \
     xctrl/bogko.cpp \
     xctrl/dialogaddemptyxt.cpp \
     xctrl/editareal.cpp \
+    xctrl/prioryty.cpp \
     xctrl/readjsonfile.cpp \
+    xctrl/state.cpp \
     xctrl/sumgraph.cpp \
     xctrl/viewareal.cpp \
     xctrl/viewcalculate.cpp \
@@ -50,6 +53,7 @@ SOURCES += \
     xctrl/xtcalculate.cpp
 
 HEADERS += \
+    common.h \
     mainwindow.h \
     project/cross.h \
     project/formgetdbcross.h \
@@ -70,7 +74,9 @@ HEADERS += \
     xctrl/bogko.h \
     xctrl/dialogaddemptyxt.h \
     xctrl/editareal.h \
+    xctrl/prioryty.h \
     xctrl/readjsonfile.h \
+    xctrl/state.h \
     xctrl/sumgraph.h \
     xctrl/viewareal.h \
     xctrl/viewcalculate.h \

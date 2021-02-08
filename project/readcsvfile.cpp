@@ -43,7 +43,7 @@ void ReadCSVFile::loadData()
     lregion=new QLineEdit(QString::number(project->Region),this);
     larea=new QLineEdit(QString::number(project->Area),this);
     lsubarea=new QLineEdit(QString::number(project->SubArea),this);
-    lstep=new QLineEdit(QString::number(project->Step),this);
+    lstep=new QLineEdit(QString::number(project->StepDevice),this);
     lchanel=new QLineEdit(QString::number(project->Chanels),this);
     rowStart=ini.getInt("import/rowstart");
     colDate=ini.getInt("import/coldate");
@@ -182,6 +182,7 @@ void ReadCSVFile::getChanges()
 
 void ReadCSVFile::getSpinBoxChanges(int value)
 {
+    Q_UNUSED(value)
 //    qDebug()<<"getSpinBoxChanges";
     rowStart=lrow->value();
     rows=lrows->value();

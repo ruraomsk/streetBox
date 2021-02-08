@@ -60,7 +60,7 @@ SumGraph::SumGraph()
     wgraph=new QScrollArea;
     grid->setAlignment(Qt::AlignTop);
     GraphRepaint();
-    show();
+//    show();
 }
 
 void SumGraph::clearAll()

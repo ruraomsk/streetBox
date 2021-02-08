@@ -154,6 +154,7 @@ void SetHourData::getChanges()
 
 void SetHourData::getSpinBoxChanges(int value)
 {
+    Q_UNUSED(value)
     rowStart=lrow->value();
     rows=lrows->value();
     colData=ldata->value();

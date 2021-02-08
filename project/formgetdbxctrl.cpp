@@ -1,8 +1,9 @@
 #include "formgetdbxctrl.h"
 
 
-FormGetDBXctrl::FormGetDBXctrl(Project *proj, QWidget *parent)
+FormGetDBXctrl::FormGetDBXctrl(Project *proj, QWidget *parent):QDialog(parent)
 {
+
     project=proj;
     auto list=Support::listXT();
     combo=new QComboBox;
@@ -32,12 +33,12 @@ FormGetDBXctrl::FormGetDBXctrl(Project *proj, QWidget *parent)
 
 void FormGetDBXctrl::moveData()
 {
-    foreach (auto var, project->xctrls) {
-        if (var->Region==lregion && var->Area==larea && var->SubArea==lsubarea ) {
-            Support::ErrorMessage("Такой ХТ уже есть");
-            return;
-        }
-    }
+//    foreach (auto var, project->xctrls) {
+//        if (var->Region==lregion && var->Area==larea && var->SubArea==lsubarea ) {
+//            Support::ErrorMessage("Такой ХТ уже есть");
+//            return;
+//        }
+//    }
     auto json = Support::getXT(lregion,larea,lsubarea);
     QJsonParseError jError;
     QJsonDocument jdoc=QJsonDocument::fromJson(json.toUtf8(),&jError);
@@ -46,8 +47,8 @@ void FormGetDBXctrl::moveData()
         emit reject();
         return;
     }
-    xctrl=new Xctrl(jdoc.toVariant().toMap());
-    project->xctrls.append(xctrl);
+    State *state=new State(jdoc.toVariant().toMap());
+    project->updateFromState(state);
     emit accept();
 
 }

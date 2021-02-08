@@ -21,7 +21,7 @@ ViewStrategy::ViewStrategy(Project *project,Xctrl *xctrl,QWidget *parent) : QWid
     QPushButton *bnAdd = new QPushButton( "Добавить"  );
     connect( bnAdd, SIGNAL( clicked() ), stable, SLOT( addRecord() ) );
     panelLayout->addWidget( bnAdd);
-    show();
+//    show();
 }
 
 void ViewStrategy::removeSelected()
@@ -140,11 +140,11 @@ QVariant StrategyTable::headerData(int section, Qt::Orientation orientation, int
     case 1:
         return "Обратный";
     case 2:
-        return "План П";
+        return "КС П";
     case 3:
-        return "План С";
+        return "КС С";
     case 4:
-        return "План О";
+        return "КС О";
     case 5:
         return "Луч П";
     case 6:

@@ -1,7 +1,6 @@
 #include "viewcalculate.h"
 
-#include <QFormLayout>
-
+extern Common common;
 ViewCalculate::ViewCalculate(    Project *project,Xctrl *xctrl,QWidget *parent) : QWidget(parent)
 {
     this->project=project;
@@ -18,24 +17,8 @@ ViewCalculate::ViewCalculate(    Project *project,Xctrl *xctrl,QWidget *parent) 
     vbox->addStretch(1);
     group->setLayout(vbox);
 
-    gstyle=new QGroupBox("Способ расчета");
-    garea=new QRadioButton("Центры областей");
-    gbox=new QRadioButton("Лучи");
-    if (xctrl->UseStrategy){
-        gbox->setChecked(true);
-    } else {
-        garea->setChecked(true);
-    }
-
-    QVBoxLayout *vb=new QVBoxLayout;
-    vb->addWidget(garea);
-    vb->addWidget(gbox);
-    vb->addStretch(1);
-    gstyle->setLayout(vb);
 
     grid=new QGridLayout;
-    grid->addWidget(group,0,0);
-    grid->addWidget(gstyle,1,0);
 
     cdates=new QComboBox;
     cdates->addItems(getAllDates());
@@ -44,7 +27,7 @@ ViewCalculate::ViewCalculate(    Project *project,Xctrl *xctrl,QWidget *parent) 
     QFormLayout *fbox=new QFormLayout;
     fbox->addRow("Выберите дату",cdates);
     fbox->addRow("Выберите заметку",ccomments);
-    grid->addLayout(fbox,2,0);
+    grid->addLayout(fbox,1,0);
     QHBoxLayout *hbox=new QHBoxLayout;
     btnLoad=new QPushButton("Загрузить данные");
     connect(btnLoad,SIGNAL(clicked()),this,SLOT(loadData()));
@@ -62,7 +45,7 @@ ViewCalculate::ViewCalculate(    Project *project,Xctrl *xctrl,QWidget *parent) 
     emptyTable();
     table();
     setLayout(grid);
-    show();
+//    show();
 }
 
 QVector<Point> ViewCalculate::getSprays()
@@ -101,6 +84,23 @@ DataGraph ViewCalculate::getData()
 
 }
 
+QList<QVector<QString> > ViewCalculate::getMatrix()
+{
+    QList<QVector<QString> > result;
+    if(!isready) return result;
+    foreach (auto r, calcData->fin) {
+        QVector<QString> rr;
+        rr.append(r[0]);
+        QString var=r[3];
+        if (var.size()==0 ||var.contains("Нет КС") ){
+            var="0";
+        }
+        rr.append(var);
+        result.append(rr);
+    }
+    return result;
+}
+
 void ViewCalculate::loadData()
 {
     if (gdefault->isChecked()){
@@ -120,19 +120,16 @@ void ViewCalculate::loadData()
         text.append(line+"\n");
     }
     ltext->setText(text);
+    loaded=true;
     update();
 }
 
 void ViewCalculate::calculateData()
 {
-    if (gbox->isChecked()){
-        xctrl->UseStrategy=true;
-    } else {
-        xctrl->UseStrategy=false;
-    }
+    if (!loaded) return;
 
-    if (gbox->isChecked())    calcData->calculate();
-    if (garea->isChecked())    calcData->calcAreal();
+    if (common.use)    calcData->calculate();
+    else  calcData->calcAreal();
 
     QString text;
     foreach (auto line, calcData->protocol) {
@@ -141,7 +138,7 @@ void ViewCalculate::calculateData()
     ltext->setText(text);
     delete wtable;
     wtable=new QTableWidget;
-    QStringList list={"Время","Прямое","Обратное","ПК назначенный","Отношение"};
+    QStringList list={"Время","Прямое","Обратное","КС расчитанная","Отношение","Примечание"};
     wtable->setColumnCount(list.size());
     for (int i = 0; i < list.size(); ++i) {
         QTableWidgetItem *t=new QTableWidgetItem(list[i]);
@@ -158,7 +155,9 @@ void ViewCalculate::calculateData()
     }
     wtable->resizeColumnsToContents();
     grid->addWidget(wtable,0,1,5,5);
+    isready=true;
     update();
+
 }
 
 void ViewCalculate::pushSpray()
@@ -209,12 +208,12 @@ QStringList ViewCalculate::getAllComments()
 void ViewCalculate::emptyTable()
 {
     matrix.clear();
-    int time=xctrl->Step;
+    int time=common.stepXT;
     while (time<24*60){
         QVector<QString> v(10);
         v[0]=QString::asprintf("%02d:%02d",time/60,time%60);
         matrix.append(v);
-        time+=xctrl->Step;
+        time+=common.stepXT;
     }
 }
 

@@ -7,6 +7,7 @@
 #include <QTableWidget>
 #include <QTextEdit>
 #include <QWidget>
+#include <QFormLayout>
 #include "../project/project.h"
 #include "../setup.h"
 #include "viewpoints.h"
@@ -24,6 +25,7 @@ public:
     QVector<Point> getSprays();
     QVector<QString> getNames();
     DataGraph getData();
+    QList<QVector<QString>> getMatrix();
 signals:
     void newSpray();
 private slots:
@@ -52,10 +54,8 @@ private:
     QPushButton *btnCalculate;
     QPushButton *btnPush;
 
-    QGroupBox *gstyle;
-    QRadioButton *garea;
-    QRadioButton *gbox;
-
+    bool loaded=false;
+    bool isready=false;
     QString addString;
 
 

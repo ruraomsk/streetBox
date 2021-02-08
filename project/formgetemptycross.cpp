@@ -9,7 +9,7 @@ FormGetEmptyCross::FormGetEmptyCross( Project *proj,QWidget *parent): QDialog(pa
     lregion=new QLineEdit(QString::number(project->Region),this);
     larea=new QLineEdit(QString::number(project->Area),this);
     lsubarea=new QLineEdit(QString::number(project->SubArea),this);
-    lstep=new QLineEdit(QString::number(project->Step),this);
+    lstep=new QLineEdit(QString::number(project->StepDevice),this);
     lchanel=new QLineEdit(QString::number(project->Chanels),this);
     lrnd=new QCheckBox();
 

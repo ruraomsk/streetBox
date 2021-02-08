@@ -11,7 +11,7 @@
 #include <QTabWidget>
 #include <QFileDialog>
 #include <QMessageBox>
-
+#include <QList>
 #include "project.h"
 #include "formgetemptycross.h"
 #include "viewcross.h"
@@ -34,6 +34,7 @@ public:
 
 public slots:
     void moveData();
+    void loadTable();
 signals:
     void changeData(QString name);
 public:
@@ -53,6 +54,10 @@ private:
     void top();
     bool isCross();
     bool isXT();
+    void table();
+    void resultTable();
+    void extTable();
+    int playKC(QVector<int> ir);
     Project *project;
     QWidget *parent;
     //Редактируемые поля
@@ -60,11 +65,18 @@ private:
     QLineEdit *larea;           //Район
     QLineEdit *lsubarea;        //Подрайон
     QLineEdit *ldesc;           //Описание проекта
-    QLineEdit *lstep;           //Интервал времени
+    QLineEdit *lstepdev;           //Интервал времени
+    QLineEdit *lstepxt;           //Интервал времени
     QLineEdit *lchanels;        //колличество каналов статистики
-
+    QGroupBox *gstyle;
+    QRadioButton *garea;
+    QRadioButton *gbox;
+    QGridLayout *grid;
     QWidget *wtop;              //Виджет редактирования параметров
-    QTabWidget *tab;            //основной виджет редактора
+    QTabWidget *tab;
+    QTabWidget *restab;
+    QTableWidget *ptable;
+    QTableWidget *etable;
 };
 
 #endif // VIEWPRO_H

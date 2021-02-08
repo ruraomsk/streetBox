@@ -165,6 +165,7 @@ void SetCSVData::getChanges()
 
 void SetCSVData::getSpinBoxChanges(int value)
 {
+    Q_UNUSED(value)
     rowStart=lrow->value();
     rows=lrows->value();
     colDate=ldate->value();
