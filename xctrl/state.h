@@ -7,7 +7,7 @@ class State
 {
 public:
     State();
-    State(QMap<QString, QVariant> map);
+    State(QMap<QString, QVariant>  map);
     void addPrioryty(Prioryty prioryty);
     void addXctrl(Xctrl *xctrl);
     Prioryty getPrioryty();
@@ -26,7 +26,7 @@ public:
     bool UseStrategy=false;             //true выполняем стратегию Лучи  иначе стратегия Области
     int Step=15;                       //Время цикла для данного подрайона `json:"step"`
     int Remain=Step;                     //Остаток времени для нового расчета `json:"rem"`
-    QDateTime LastTime ;            //Последний расчет характерной точки `json:"ltime"`
+    int LastTime ;            //Последний расчет характерной точки `json:"ltime"`
     int external[12][2]={{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
     Prioryty prioryty;
     QList<Xctrl *> xctrls;

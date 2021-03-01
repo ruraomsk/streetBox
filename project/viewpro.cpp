@@ -335,6 +335,8 @@ void ViewPro::moveData()
         return;
     }
     project->Chanels=lchanels->text().toInt();
+    if (lswitch->isChecked()) project->Switch=true; else project->Switch=false;
+    if (lrelease->isChecked()) project->Release=true; else project->Release=false;
     common.stepXT=project->StepXT;
     if (gbox->isChecked()) project->UseStrategy=true;
     else project->UseStrategy=false;
@@ -377,6 +379,10 @@ void ViewPro::top()
     lstepxt->setMaximumSize(maxSize);
     lchanels=new QLineEdit(QString::number(project->Chanels),this);
     lchanels->setMaximumSize(maxSize);
+    lswitch=new QCheckBox("");
+    lswitch->setChecked(project->Switch);
+    lrelease=new QCheckBox("");
+    lrelease->setChecked(project->Release);
     grid=new QGridLayout(this);
     grid->setAlignment(Qt::AlignTop);
 
@@ -388,6 +394,8 @@ void ViewPro::top()
     hbox->addRow("Опрос устройств",lstepdev);
     hbox->addRow("Интервал времени расчет XT",lstepxt);
     hbox->addRow("Кол-во каналов",lchanels);
+    hbox->addRow("Разрешить расчет ",lswitch);
+    hbox->addRow("Разрешить выполнение ",lrelease);
     grid->addLayout(hbox,0,0);
 
     gstyle=new QGroupBox("Способ расчета");

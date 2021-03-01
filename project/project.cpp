@@ -35,6 +35,8 @@ Project::Project(QString nameFile)
     StepXT=map["stepxt"].toInt();
     Chanels=map["chanels"].toInt();
     UseStrategy=map["use"].toBool();
+    Release=map["release"].toBool();
+    Switch=map["switch"].toBool();
     description=map["description"].toString();
     foreach (auto c, map["crosses"].toList()) {
         crosses.append(new Cross(c.toMap()));
@@ -123,12 +125,14 @@ State *Project::makeState()
     state->Area=Area;
     state->SubArea=SubArea;
     state->Step=StepXT;
-    state->LastTime.setTime_t(0);
+    state->LastTime=0;
     state->Remain=0;
     state->UseStrategy=UseStrategy;
     state->PKNow=0;
     state->PKLast=0;
     state->PKCalc=0;
+    state->Release=Release;
+    state->Switch=Switch;
     foreach(auto s,xctrls){
         state->xctrls.append(s);
     }
@@ -165,7 +169,9 @@ QString Project::ToJSON()
     result.append("],");
     result.append(prioryty.ToJSON()+",");
     result.append(extToJson()+",");
-    result.append(QString::asprintf("\"stepdev\":%d,\"stepxt\":%d,\"chanels\":%d",StepDevice,StepXT,Chanels));
+    result.append(QString::asprintf("\"stepdev\":%d,\"stepxt\":%d,\"chanels\":%d,",StepDevice,StepXT,Chanels));
+    result.append(QString::asprintf("\"switch\":%s,\"release\":%s",Switch?"true":"false",Release?"true":"false"));
+
     result.append("}");
     return result;
 }

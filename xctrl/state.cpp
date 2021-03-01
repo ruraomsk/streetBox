@@ -5,12 +5,12 @@ State::State()
 
 }
 
-State::State(QMap<QString, QVariant> map)
+State::State(QMap<QString, QVariant>  map)
 {
     Region=map["region"].toInt();
     Area=map["area"].toInt();
     SubArea=map["subarea"].toInt();
-    LastTime=QDateTime::fromString(map["ltime"].toString(),"yyyy-MM-ddThh:mm:ss.zzz");
+    LastTime=map["ltime"].toInt();
 
     Step=map["step"].toInt();
     Remain=map["rem"].toInt();
@@ -61,7 +61,7 @@ QString State::ToJSON()
     result.append(QString::asprintf("\"switch\":%s,\"release\":%s,\"step\":%d,\"rem\":%d,",Switch?"true":"false",Release?"true":"false",Step,Remain));
     result.append(QString::asprintf("\"use\":%s,",UseStrategy?"true":"false"));
     result.append(QString::asprintf("\"pkcalc\":%d,\"pknow\":%d,\"pklast\":%d,",PKCalc,PKNow,PKLast));
-    result.append("\"ltime\":\""+LastTime.toString("yyyy-MM-ddThh:mm:ss.zzz")+"\",");
+    result.append("\"ltime\":0,");
 
     result.append(prioryty.ToJSON()+",");
     result.append(extToJson()+",");

@@ -240,7 +240,7 @@ void PointsTable::removeSelected(const QModelIndex& index)
 
 void PointsTable::addRecord()
 {
-    Calc c(1,1,0);
+    Calc c(project->Region,project->Area,0);
     int row=xctrl->Calculates.size();
     if (row==1) return;
     beginInsertRows(QModelIndex(),row,row);

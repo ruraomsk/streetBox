@@ -41,6 +41,9 @@ public:
     int StepXT=15;      //Интервал расчета ХТ
     int Chanels=16;
     bool isChanged;
+    bool Switch;
+    bool Release;
+
     QString description="";
     QList<Cross *> crosses;
     QList<Xctrl *> xctrls;

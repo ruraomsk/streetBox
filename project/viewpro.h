@@ -68,6 +68,9 @@ private:
     QLineEdit *lstepdev;           //Интервал времени
     QLineEdit *lstepxt;           //Интервал времени
     QLineEdit *lchanels;        //колличество каналов статистики
+    QCheckBox *lswitch;
+    QCheckBox *lrelease;
+
     QGroupBox *gstyle;
     QRadioButton *garea;
     QRadioButton *gbox;

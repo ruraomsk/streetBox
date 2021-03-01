@@ -56,9 +56,6 @@ Xctrl::Xctrl(QMap<QString, QVariant> map)
     Left=map["left"].toFloat();
     Right=map["right"].toFloat();
     name=map["name"].toString();
-    foreach (auto s, map["status"].toList()) {
-        Status.append(s.toString());
-    }
     foreach(auto s,map["StrategyB"].toList()){
         Strategys.append(Strategy(s.toMap()));
     }
